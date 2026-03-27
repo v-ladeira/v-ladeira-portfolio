@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Vitor Ladeira | Aerospace Engineering Student</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#A30002' },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Minor custom styles for timeline and smoothness */
+        .timeline-line { box-shadow: none; top: 1.75rem; }
+        .timeline-dot { margin-top: 0.25rem; }
+    </style>
+</head>
+<body class="bg-[#0f172a] text-gray-100 font-sans antialiased">
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0f172a]/70 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#home" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-md bg-primary flex items-center justify-center text-white font-bold">VL</div>
+                <span class="sr-only">Vitor Ladeira</span>
+            </a>
+            <div class="hidden md:flex items-center gap-6 text-gray-200">
+                <a href="#about" class="hover:text-primary transition-colors duration-300">About</a>
+                <a href="#projects" class="hover:text-primary transition-colors duration-300">Projects</a>
+                <a href="#skills" class="hover:text-primary transition-colors duration-300">Skills</a>
+                <a href="#experience" class="hover:text-primary transition-colors duration-300">Experience</a>
+                <a href="#cv" class="hover:text-primary transition-colors duration-300">CV</a>
+                <a href="#contact" class="hover:text-primary transition-colors duration-300">Contact</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" aria-expanded="false" aria-controls="mobile-menu" class="p-2 rounded-md text-gray-200 hover:bg-white/5 focus:outline-none">
+                    <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden px-6 pb-4 hidden">
+            <div class="flex flex-col gap-3">
+                <a href="#about" class="block py-2 px-3 rounded hover:bg-white/5">About</a>
+                <a href="#projects" class="block py-2 px-3 rounded hover:bg-white/5">Projects</a>
+                <a href="#skills" class="block py-2 px-3 rounded hover:bg-white/5">Skills</a>
+                <a href="#experience" class="block py-2 px-3 rounded hover:bg-white/5">Experience</a>
+                <a href="#cv" class="block py-2 px-3 rounded hover:bg-white/5">CV</a>
+                <a href="#contact" class="block py-2 px-3 rounded hover:bg-white/5">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="home" class="pt-24">
+        <!-- HERO -->
+        <section class="max-w-5xl mx-auto px-6 py-16 text-center">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-white">Vitor Ladeira</h1>
+            <p class="mt-3 text-lg text-gray-300">Aerospace Engineering Student | Guimarães, Portugal</p>
+            <p class="mt-4 text-gray-300 max-w-2xl mx-auto">Aspiring aerospace engineer with international academic and professional experience, combining strong analytical ability, adaptability, and teamwork.</p>
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#projects" class="inline-flex items-center gap-2 bg-primary text-white px-5 py-3 rounded-md shadow hover:-translate-y-1 transform transition duration-300 ease-in-out">View Projects</a>
+                <a href="./cv.pdf" download class="inline-flex items-center gap-2 border border-gray-700 text-gray-100 px-5 py-3 rounded-md hover:border-primary hover:text-primary transition duration-300 ease-in-out">Download CV</a>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about" class="max-w-5xl mx-auto px-6 py-12">
+            <div class="bg-[#0b1220]/60 border border-gray-800 rounded-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-white">About</h2>
+                <p class="text-gray-300">Future aerospace engineer with international academic and professional experience, combining strong analytical ability, adaptability, and teamwork. Currently pursuing a degree in Aerospace Engineering at Universidade do Minho, with prior studies in Aeronautical Engineering at PUC Minas (Brazil). Experienced in data management, CAD modeling, and cross-cultural environments through professional internships and international exchange.</p>
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects" class="max-w-6xl mx-auto px-6 py-12">
+            <h2 class="text-2xl font-semibold mb-6 text-white">Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project 1 -->
+                <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
+                    <img src="" alt="Portfolio Website" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="p-5">
+                        <h3 class="text-lg font-semibold text-white">Website Development</h3>
+                    <p class="text-sm text-gray-400 mt-1">Web Development</p>
+                    <p class="mt-3 text-gray-300">Some personal and joint websites built with HTML5, TailwindCSS, and modern web design principles. Showcasing professional work and expertise.<br>
+                        <a href="https://vitastiq.pt/" target="_blank" rel="noopener noreferrer" class="text-primary">Vitastiq</a> <br>
+                        <a href="https://teoricar.com.br/" target="_blank" rel="noopener noreferrer" class="text-primary">Teoricar</a> <br>
+                        <a href="https://www.vtec.com.br/" target="_blank" rel="noopener noreferrer" class="text-primary">VTEC</a> <em>(WIP)</em>
+                    </p>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
+                    <img src="" alt="Cessna Aircraft CAD Model" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="p-5">
+                        <h3 class="text-lg font-semibold text-white">Cessna Aircraft CAD Model</h3>
+                    <p class="text-sm text-gray-400 mt-1">CAD Modeling | CATIA V6</p>
+                    <p class="mt-3 text-gray-300">Detailed 3D CAD model of a Cessna aircraft designed in CATIA V6. Demonstrates proficiency in parametric design and aerospace component modeling.</p>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
+                    <img src="" alt="FEM Structural Analysis" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="p-5">
+                        <h3 class="text-lg font-semibold text-white">FEM Structural Analysis</h3>
+                    <p class="text-sm text-gray-400 mt-1">FEM Simulation | Autodesk Fusion</p>
+                    <p class="mt-3 text-gray-300">Finite Element Method (FEM) simulation and structural analysis performed in Autodesk Fusion. Analyzing stress distribution and component performance under load conditions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills" class="max-w-6xl mx-auto px-6 py-12">
+            <h2 class="text-2xl font-semibold mb-6 text-white">Skills</h2>
+            <div class="flex flex-wrap gap-3">
+                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Autodesk AutoCAD</span>
+                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">CATIA V6</span>
+                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">SolidWorks</span>
+                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">3DEXPERIENCE</span>
+                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Microsoft Office</span>
+                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Excel</span>
+                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Power BI</span>
+                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Microsoft Power Automate</span>
+                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Adobe Photoshop</span>
+                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Adobe Premiere</span>
+                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Technical Drawing</span>
+                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Problem Solving</span>
+                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Teamwork</span>
+                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Adaptability</span>
+            </div>
+        </section>
+
+        <!-- CERTIFICATIONS -->
+        <section id="certifications" class="max-w-6xl mx-auto px-6 py-12">
+            <h2 class="text-2xl font-semibold mb-6 text-white">Certifications & Training</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Certification 1 -->
+                <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
+                    <img src="" alt="Power BI Training" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="p-5">
+                        <h3 class="text-lg font-semibold text-white">PBI Descobridor</h3>
+                        <p class="text-sm text-gray-400 mt-1">Power BI Training</p>
+                        <p class="mt-3 text-gray-300">Comprehensive training in Power BI for data analysis and visualization.</p>
+                    </div>
+                </div>
+
+                <!-- Certification 2 -->
+                <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
+                    <img src="" alt="ANSA Training" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="p-5">
+                        <h3 class="text-lg font-semibold text-white">ANSA Training</h3>
+                        <p class="text-sm text-gray-400 mt-1">Mesh modeling for dynamic simulation</p>
+                        <p class="mt-3 text-gray-300">Training in mesh modeling for CFD and FEM simulations.</p>
+                    </div>
+                </div>
+
+                <!-- Certification 3 -->
+                <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
+                    <img src="" alt="SolidWorks Course" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="p-5">
+                        <h3 class="text-lg font-semibold text-white">Intermediate SolidWorks Course</h3>
+                        <p class="text-sm text-gray-400 mt-1">Modeling and simulation preparation</p>
+                        <p class="mt-3 text-gray-300">Intermediate course for modeling and simulation in SolidWorks, provided by the University.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE -->
+        <section id="experience" class="max-w-5xl mx-auto px-6 py-12">
+            <h2 class="text-2xl font-semibold mb-6 text-white">Experience & Education</h2>
+            <div class="relative">
+                <!-- Vertical line -->
+                <div class="hidden md:block absolute left-5 top-0 bottom-0 w-0.5 bg-primary rounded timeline-line"></div>
+                <div class="space-y-8">
+                    <!-- Entry 1 -->
+                    <div class="md:flex md:items-start md:gap-6">
+                        <div class="md:w-10 md:flex md:justify-center">
+                            <div class="w-3 h-3 rounded-full bg-primary mt-1 md:mt-0"></div>
+                        </div>
+                        <div class="mt-2 md:mt-0">
+                            <p class="text-sm text-primary font-medium">Education</p>
+                            <h3 class="text-lg font-semibold text-white">B.Sc. (Licenciatura) in Aerospace Engineering</h3>
+                            <p class="text-sm text-gray-400">Universidade do Minho — 09/2025 – Present</p>
+                            <p class="mt-2 text-gray-300">Currently pursuing a degree in Aerospace Engineering.</p>
+                        </div>
+                    </div>
+
+                    <!-- Entry 2 -->
+                    <div class="md:flex md:items-start md:gap-6">
+                        <div class="md:w-10 md:flex md:justify-center">
+                            <div class="w-3 h-3 rounded-full bg-primary mt-1 md:mt-0"></div>
+                        </div>
+                        <div class="mt-2 md:mt-0">
+                            <p class="text-sm text-primary font-medium">Internship</p>
+                            <h3 class="text-lg font-semibold text-white">Administrative Intern</h3>
+                            <p class="text-sm text-gray-400">CREA-MG, Brazil — 05/2024 – 02/2025</p>
+                            <p class="mt-2 text-gray-300">Supported government activities and procedural analysis. Assisted in document drafting, formatting, and data organization. Maintained internal spreadsheets and optimized workflows with MS PowerAutomate.</p>
+                        </div>
+                    </div>
+
+                    <!-- Entry 3 -->
+                    <div class="md:flex md:items-start md:gap-6">
+                        <div class="md:w-10 md:flex md:justify-center">
+                            <div class="w-3 h-3 rounded-full bg-primary mt-1 md:mt-0"></div>
+                        </div>
+                        <div class="mt-2 md:mt-0">
+                            <p class="text-sm text-primary font-medium">Internship</p>
+                            <h3 class="text-lg font-semibold text-white">Administrative Intern</h3>
+                            <p class="text-sm text-gray-400">Woodgrove Consultoria, Brazil — 04/2023 – 09/2023</p>
+                            <p class="mt-2 text-gray-300">Conducted data analysis and generated management reports using Power BI. Coordinated travel bookings, visas, and insurance processes. Managed financial and corporate travel data.</p>
+                        </div>
+                    </div>
+
+                    <!-- Entry 4 -->
+                    <div class="md:flex md:items-start md:gap-6">
+                        <div class="md:w-10 md:flex md:justify-center">
+                            <div class="w-3 h-3 rounded-full bg-primary mt-1 md:mt-0"></div>
+                        </div>
+                        <div class="mt-2 md:mt-0">
+                            <p class="text-sm text-primary font-medium">Education</p>
+                            <h3 class="text-lg font-semibold text-white">B.Sc. in Aeronautical Engineering</h3>
+                            <p class="text-sm text-gray-400">Pontifical Catholic University of Minas Gerais — 08/2022 – 06/2025</p>
+                            <p class="mt-2 text-gray-300">Prior studies in Aeronautical Engineering, before transferring to Portugal.</p>
+                        </div>
+                    </div>
+
+                    <!-- Entry 5 -->
+                    <div class="md:flex md:items-start md:gap-6">
+                        <div class="md:w-10 md:flex md:justify-center">
+                            <div class="w-3 h-3 rounded-full bg-primary mt-1 md:mt-0"></div>
+                        </div>
+                        <div class="mt-2 md:mt-0">
+                            <p class="text-sm text-primary font-medium">Experience</p>
+                            <h3 class="text-lg font-semibold text-white">High School Exchange Program (J-1 Program, USA)</h3>
+                            <p class="text-sm text-gray-400">Albuquerque, USA — 2021–2022 </p>
+                            <p class="mt-2 text-gray-300">Finished senior year in the USA, in a cultural exchange program, improving language skills and gaining international experience.</p>
+                        </div>
+                    </div>
+
+                    <!-- Entry 6 -->
+                    <div class="md:flex md:items-start md:gap-6">
+                        <div class="md:w-10 md:flex md:justify-center">
+                            <div class="w-3 h-3 rounded-full bg-primary mt-1 md:mt-0"></div>
+                        </div>
+                        <div class="mt-2 md:mt-0">
+                            <p class="text-sm text-primary font-medium">Experience</p>
+                            <h3 class="text-lg font-semibold text-white">Assistant, Family Tourism Business</h3>
+                            <p class="text-sm text-gray-400">Lta Viagens e Turismo, Brazil — 2017 – 2021</p>
+                            <p class="mt-2 text-gray-300">Assisted in family business. Corporate and personal travel management, Emphasis on customer service with flight, hotel, and tour bookings. Produced promotional advertisements/publications and local travel guides.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CV -->
+        <section id="cv" class="max-w-3xl mx-auto px-6 py-12 text-center">
+            <div class="bg-[#0b1220]/60 border border-gray-800 rounded-lg p-8">
+                <a href="./cv.pdf" download class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-md shadow hover:-translate-y-1 transition duration-300 ease-in-out">Download CV</a>
+                <p class="mt-4 text-gray-300">Available for internships & part-time collaborations.</p>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="max-w-5xl mx-auto px-6 py-12">
+            <h2 class="text-2xl font-semibold mb-6 text-white">Contact</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <a href="mailto:vitorladpt@gmail.com" class="block bg-[#071025]/60 border border-gray-800 rounded-lg p-6 hover:-translate-y-1 transition duration-300 ease-in-out">
+                    <p class="text-sm text-gray-400">Email</p>
+                    <p class="mt-2 text-white font-semibold">vitorladpt@gmail.com</p>
+                </a>
+                <a href="https://www.linkedin.com/in/vitor-ladeira" target="_blank" rel="noreferrer" class="block bg-[#071025]/60 border border-gray-800 rounded-lg p-6 hover:-translate-y-1 transition duration-300 ease-in-out">
+                    <p class="text-sm text-gray-400">LinkedIn</p>
+                    <p class="mt-2 text-white font-semibold">/in/vitor-ladeira</p>
+                </a>
+                <a href="https://github.com/v-ladeira" target="_blank" rel="noreferrer" class="block bg-[#071025]/60 border border-gray-800 rounded-lg p-6 hover:-translate-y-1 transition duration-300 ease-in-out">
+                    <p class="text-sm text-gray-400">GitHub</p>
+                    <p class="mt-2 text-white font-semibold">github.com/v-ladeira</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="border-t border-gray-800 mt-12 py-6">
+            <div class="max-w-5xl mx-auto px-6 text-center text-gray-400">© 2026 Vitor Ladeira · Built with HTML & Tailwind</div>
+        </footer>
+    </main>
+
+    <script>
+        // Mobile menu toggle
+        const btn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('icon-open');
+        const iconClose = document.getElementById('icon-close');
+        btn && btn.addEventListener('click', () => {
+            const open = menu.classList.toggle('hidden');
+            // If hidden after toggle, menu is closed; update icons accordingly
+            if (menu.classList.contains('hidden')) {
+                iconOpen.classList.remove('hidden');
+                iconClose.classList.add('hidden');
+                btn.setAttribute('aria-expanded','false');
+            } else {
+                iconOpen.classList.add('hidden');
+                iconClose.classList.remove('hidden');
+                btn.setAttribute('aria-expanded','true');
+            }
+        });
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(a => a.addEventListener('click', () => menu.classList.add('hidden')));
+    </script>
+</body>
+</html>
