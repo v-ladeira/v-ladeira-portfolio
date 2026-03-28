@@ -6,6 +6,9 @@
     <title>Vitor Ladeira | Aerospace Engineering Student</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -17,26 +20,274 @@
         }
     </script>
     <style>
-        /* Minor custom styles for timeline and smoothness */
-        .timeline-line { box-shadow: none; top: 1.75rem; }
-        .timeline-dot { margin-top: 0.25rem; }
+        /* Timeline and smoothness */
+        .timeline-line { box-shadow: none; }
+
+        /* Scroll-triggered fade-in animations */
+        section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Overall dark background with dotted pattern */
+        body {
+            background-color: #000000;
+            background-image:
+                url('assets/dots-pattern.webp'),
+                radial-gradient(circle at 50% 12%, rgba(255, 67, 67, 0.14), transparent 42%),
+                radial-gradient(circle at 85% 95%, rgba(211, 39, 39, 0.12), transparent 55%);
+            background-position: 50% 100%, 50% 18%, 80% 92%;
+            background-repeat: repeat, no-repeat, no-repeat;
+            background-size: 30px, 160% 160%, 180% 180%;
+            color: #e5e7eb;
+        }
+
+        section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.13;
+            z-index: -1;
+            background-repeat: repeat;
+            background-image: url('assets/dots-pattern.webp');
+            background-position: 50% 100%;
+            background-size: 30px;
+        }
+
+        #home::before {
+            background-image:
+                radial-gradient(circle at 42% 16%, rgba(255, 75, 75, 0.2), transparent 48%),
+                radial-gradient(circle at 80% 80%, rgba(255, 10, 10, 0.13), transparent 52%),
+                url('assets/dots-pattern.webp');
+        }
+
+        #about::before {
+            background-image:
+                radial-gradient(circle at 18% 25%, rgba(255, 35, 35, 0.15), transparent 48%),
+                radial-gradient(circle at 65% 88%, rgba(252, 61, 61, 0.1), transparent 52%),
+                url('assets/dots-pattern.webp');
+        }
+
+        #projects::before {
+            background-image:
+                radial-gradient(circle at 45% 24%, rgba(255, 16, 16, 0.12), transparent 47%),
+                radial-gradient(circle at 87% 82%, rgba(245, 55, 55, 0.09), transparent 56%),
+                url('assets/dots-pattern.webp');
+        }
+
+        #skills::before {
+            background-image:
+                radial-gradient(circle at 35% 28%, rgba(255, 80, 80, 0.17), transparent 45%),
+                radial-gradient(circle at 75% 78%, rgba(225, 40, 40, 0.09), transparent 55%),
+                url('assets/dots-pattern.webp');
+        }
+
+        #experience::before {
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(255, 45, 45, 0.13), transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(193, 14, 14, 0.08), transparent 58%),
+                url('assets/dots-pattern.webp');
+        }
+
+        #certifications::before,
+        #cv::before,
+        #contact::before {
+            background-image:
+                radial-gradient(circle at 50% 30%, rgba(215, 50, 50, 0.11), transparent 50%),
+                radial-gradient(circle at 82% 90%, rgba(240, 40, 40, 0.07), transparent 58%),
+                url('assets/dots-pattern.webp');
+        }
+
+        /* Navbar active link highlight */
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+
+        /* Gradient animated text on name (red tones only) */
+        .gradient-text {
+            background: linear-gradient(90deg, #ff6b6b, #ff2b2b, #c00000, #ff0909, #ff6b6b);
+            background-size: 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shine-red 5s linear infinite;
+        }
+        @keyframes shine-red {
+            0% { background-position: 0%; }
+            50% { background-position: 150%; }
+            100% { background-position: 300%; }
+        }
+
+        /* Underlying typed text accent */
+        #typed {
+            color: #ff6b6b !important;
+            text-shadow: 0 0 8px rgba(255, 107, 107, 0.85), 0 0 14px rgba(255, 16, 16, 0.8), 0 0 24px rgba(169, 0, 0, 0.65);
+            font-weight: 700;
+        }
+
+        /* Stats counter animations */
+        .stat-number {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #A30002;
+        }
+
+        /* Custom cursor - hide default cursor */
+        * {
+            cursor: none !important;
+        }
+
+        /* Particles.js background */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .hero-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 3D card hover effect enhancement */
+        .card-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        /* ── Skill Carousel ── */
+        #skill-carousel { position: relative; width: 100%; }
+        .carousel-viewport { overflow: hidden; position: relative; width: 100%; }
+        .carousel-track { position: relative; width: 100%; }
+        .skill-card {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            background: #071025;
+            border: 1px solid #1f2937;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            overflow-y: auto;
+            will-change: transform, opacity;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease;
+            user-select: none;
+            -webkit-overflow-scrolling: touch;
+            box-sizing: border-box;
+        }
+        .skill-card::-webkit-scrollbar { width: 3px; }
+        .skill-card::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+        .skill-card-accent { height: 3px; border-radius: 2px; margin-bottom: 1rem; }
+        .skill-card h3 { font-size: 1.1rem; font-weight: 700; color: #f1f5f9; margin-bottom: 0.25rem; }
+        .skill-card-desc { font-size: 0.78rem; color: #64748b; margin-bottom: 1rem; }
+        .skill-subcat-label {
+            font-size: 0.72rem; color: #475569; text-transform: uppercase;
+            letter-spacing: 0.06em; margin: 0.75rem 0 0.35rem;
+        }
+        .skill-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+        .skill-pill {
+            border-radius: 9999px; padding: 3px 10px;
+            font-weight: 500; line-height: 1.4; border: 1px solid transparent;
+        }
+        .carousel-controls {
+            display: flex; align-items: center; justify-content: center;
+            gap: 16px; margin-top: 20px;
+        }
+        .carousel-btn {
+            width: 36px; height: 36px; border-radius: 50%;
+            border: 1px solid #1f2937; background: rgba(7, 16, 37, 0.6);
+            color: #e5e7eb; font-size: 1.4rem; line-height: 1;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .carousel-btn:hover { border-color: #A30002; background: rgba(163, 0, 2, 0.1); }
+        .carousel-dots { display: flex; gap: 8px; }
+        .carousel-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: #1e293b; transition: background 0.3s, transform 0.3s; cursor: pointer;
+        }
+        .carousel-dot.active { background: #A30002; transform: scale(1.3); }
+
+        /* Desktop: 3 cards side by side */
+        @media (min-width: 769px) {
+            .carousel-track { height: 600px; }
+            .skill-card { width: 35%; }
+            .skill-card[data-pos="0"] {
+                transform: translateX(-50%);
+                opacity: 1; z-index: 10;
+                border-color: #334155;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            }
+            .skill-card[data-pos="-1"] {
+                transform: translateX(-161.3%);
+                opacity: 0.6; z-index: 9; cursor: pointer;
+            }
+            .skill-card[data-pos="1"] {
+                transform: translateX(61.3%);
+                opacity: 0.6; z-index: 9; cursor: pointer;
+            }
+            .skill-card[data-pos="-2"] {
+                transform: translateX(-272.6%);
+                opacity: 0; z-index: 8; pointer-events: none;
+            }
+            .skill-card[data-pos="2"] {
+                transform: translateX(172.6%);
+                opacity: 0; z-index: 8; pointer-events: none;
+            }
+        }
+
+        /* Hide uninitialised cards (no data-pos yet) */
+        .skill-card:not([data-pos]) { opacity: 0; pointer-events: none; }
+
+        /* Mobile: 1 card + stacked depth */
+        @media (max-width: 768px) {
+            .carousel-track { height: 460px; }
+            .skill-card { width: 92%; }
+            .skill-card[data-pos="0"] {
+                transform: translateX(-50%) scale(1) rotateZ(0deg);
+                opacity: 1; z-index: 10;
+            }
+            .skill-card[data-pos="1"] {
+                transform: translateX(-50%) scale(0.95) translateY(10px);
+                opacity: 0.55; z-index: 9; pointer-events: none;
+            }
+            .skill-card[data-pos="2"] {
+                transform: translateX(-50%) scale(0.90) translateY(20px);
+                opacity: 0.25; z-index: 8; pointer-events: none;
+            }
+            .skill-card[data-pos="-1"],
+            .skill-card[data-pos="-2"] {
+                transform: translateX(calc(-50% - 200%));
+                opacity: 0; z-index: 7; pointer-events: none;
+            }
+        }
     </style>
 </head>
-<body class="bg-[#0f172a] text-gray-100 font-sans antialiased">
+<body class="bg-black text-gray-100 font-sans antialiased">
     <!-- NAVBAR -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0f172a]/70 backdrop-blur-md border-b border-gray-800">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/70 backdrop-blur-md border-b border-gray-800">
         <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <a href="#home" class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-md bg-primary flex items-center justify-center text-white font-bold">VL</div>
                 <span class="sr-only">Vitor Ladeira</span>
             </a>
             <div class="hidden md:flex items-center gap-6 text-gray-200">
-                <a href="#about" class="hover:text-primary transition-colors duration-300">About</a>
-                <a href="#projects" class="hover:text-primary transition-colors duration-300">Projects</a>
-                <a href="#skills" class="hover:text-primary transition-colors duration-300">Skills</a>
-                <a href="#experience" class="hover:text-primary transition-colors duration-300">Experience</a>
-                <a href="#cv" class="hover:text-primary transition-colors duration-300">CV</a>
-                <a href="#contact" class="hover:text-primary transition-colors duration-300">Contact</a>
+                <a href="#about" data-section="about" class="nav-link hover:text-primary transition-colors duration-300">About</a>
+                <a href="#projects" data-section="projects" class="nav-link hover:text-primary transition-colors duration-300">Projects</a>
+                <a href="#skills" data-section="skills" class="nav-link hover:text-primary transition-colors duration-300">Skills</a>
+                <a href="#experience" data-section="experience" class="nav-link hover:text-primary transition-colors duration-300">Experience</a>
+                <a href="#cv" data-section="cv" class="nav-link hover:text-primary transition-colors duration-300">CV</a>
+                <a href="#contact" data-section="contact" class="nav-link hover:text-primary transition-colors duration-300">Contact</a>
             </div>
             <div class="md:hidden">
                 <button id="mobile-menu-button" aria-expanded="false" aria-controls="mobile-menu" class="p-2 rounded-md text-gray-200 hover:bg-white/5 focus:outline-none">
@@ -63,14 +314,19 @@
     </nav>
 
     <main id="home" class="pt-24">
-        <!-- HERO -->
-        <section class="max-w-5xl mx-auto px-6 py-16 text-center">
-            <h1 class="text-4xl sm:text-5xl font-extrabold text-white">Vitor Ladeira</h1>
-            <p class="mt-3 text-lg text-gray-300">Aerospace Engineering Student | Guimarães, Portugal</p>
-            <p class="mt-4 text-gray-300 max-w-2xl mx-auto">Aspiring aerospace engineer with international academic and professional experience, combining strong analytical ability, adaptability, and teamwork.</p>
-            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#projects" class="inline-flex items-center gap-2 bg-primary text-white px-5 py-3 rounded-md shadow hover:-translate-y-1 transform transition duration-300 ease-in-out">View Projects</a>
-                <a href="./cv.pdf" download class="inline-flex items-center gap-2 border border-gray-700 text-gray-100 px-5 py-3 rounded-md hover:border-primary hover:text-primary transition duration-300 ease-in-out">Download CV</a>
+        <!-- HERO with Particles background -->
+        <section class="max-w-5xl mx-auto px-6 py-16 text-center relative">
+            <div id="particles-js" class="absolute top-0 left-0 w-full h-96"></div>
+            <div class="hero-container relative z-10">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-white gradient-text">Vitor Ladeira</h1>
+                <p class="mt-3 text-lg text-gray-300">
+                    <span id="typed" class="text-indigo-400"></span>
+                </p>
+                <p class="mt-4 text-gray-300 max-w-2xl mx-auto">Aspiring aerospace engineer with international academic and professional experience, combining strong analytical ability, adaptability, and teamwork.</p>
+                <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#projects" class="inline-flex items-center gap-2 bg-primary text-white px-5 py-3 rounded-md shadow hover:-translate-y-1 transform transition duration-300 ease-in-out">View Projects</a>
+                    <a href="./assets/VL_CV 26Q1 (ENG).pdf" download class="inline-flex items-center gap-2 border border-gray-700 text-gray-100 px-5 py-3 rounded-md hover:border-primary hover:text-primary transition duration-300 ease-in-out">Download CV</a>
+                </div>
             </div>
         </section>
 
@@ -78,7 +334,7 @@
         <section id="about" class="max-w-5xl mx-auto px-6 py-12">
             <div class="bg-[#0b1220]/60 border border-gray-800 rounded-lg p-6">
                 <h2 class="text-2xl font-semibold mb-4 text-white">About</h2>
-                <p class="text-gray-300">Future aerospace engineer with international academic and professional experience, combining strong analytical ability, adaptability, and teamwork. Currently pursuing a degree in Aerospace Engineering at Universidade do Minho, with prior studies in Aeronautical Engineering at PUC Minas (Brazil). Experienced in data management, CAD modeling, and cross-cultural environments through professional internships and international exchange.</p>
+                <p class="text-gray-300">Hi! I’m an aspiring aerospace engineer with international academic and professional experience. I'm driven by my own curiosity and a passion for problem-solving. I’m currently studying Aerospace Engineering at the Universidade do Minho, after beginning my journey in Aeronautical Engineering in Brazil. Along the way, I’ve developed strong analytical skills, adaptability, and a collaborative mindset. Through internships and international experiences, I’ve gained hands-on experience in data management, CAD modeling, and working in tandem with diverse, cross-cultural teams.</p>
             </div>
         </section>
 
@@ -87,22 +343,22 @@
             <h2 class="text-2xl font-semibold mb-6 text-white">Projects</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Project 1 -->
-                <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
-                    <img src="" alt="Portfolio Website" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                <div class="group card-3d bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
+                    <img src="assets/VitastiqSite.gif" alt="Portfolio Website" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                     <div class="p-5">
                         <h3 class="text-lg font-semibold text-white">Website Development</h3>
                     <p class="text-sm text-gray-400 mt-1">Web Development</p>
-                    <p class="mt-3 text-gray-300">Some personal and joint websites built with HTML5, TailwindCSS, and modern web design principles. Showcasing professional work and expertise.<br>
-                        <a href="https://vitastiq.pt/" target="_blank" rel="noopener noreferrer" class="text-primary">Vitastiq</a> <br>
-                        <a href="https://teoricar.com.br/" target="_blank" rel="noopener noreferrer" class="text-primary">Teoricar</a> <br>
-                        <a href="https://www.vtec.com.br/" target="_blank" rel="noopener noreferrer" class="text-primary">VTEC</a> <em>(WIP)</em>
+                    <p class="mt-3 text-gray-300">Some personal and some joint websites built with HTML5, TailwindCSS, and modern web design principles. Showcasing professional work and expertise. Examples include:<br>
+                        <a href="https://vitastiq.pt/" target="_blank" rel="noopener noreferrer" class="text-primary">Vitastiq.pt</a> |
+                        <a href="https://teoricar.com.br/" target="_blank" rel="noopener noreferrer" class="text-primary">Teoricar.com.br</a> |
+                        <a href="https://www.vtec.com.br/" target="_blank" rel="noopener noreferrer" class="text-primary">VTEC.com.br</a> <em>(WIP)</em>
                     </p>
                     </div>
                 </div>
 
                 <!-- Project 2 -->
-                <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
-                    <img src="" alt="Cessna Aircraft CAD Model" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                <div class="group card-3d bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
+                    <img src="assets/CessnaCATIA.png" alt="Cessna Aircraft CAD Model" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                     <div class="p-5">
                         <h3 class="text-lg font-semibold text-white">Cessna Aircraft CAD Model</h3>
                     <p class="text-sm text-gray-400 mt-1">CAD Modeling | CATIA V6</p>
@@ -111,8 +367,8 @@
                 </div>
 
                 <!-- Project 3 -->
-                <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
-                    <img src="" alt="FEM Structural Analysis" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                <div class="group card-3d bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
+                    <img src="assets/FEM3dx.jpg" alt="FEM Structural Analysis" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                     <div class="p-5">
                         <h3 class="text-lg font-semibold text-white">FEM Structural Analysis</h3>
                     <p class="text-sm text-gray-400 mt-1">FEM Simulation | Autodesk Fusion</p>
@@ -125,21 +381,15 @@
         <!-- SKILLS -->
         <section id="skills" class="max-w-6xl mx-auto px-6 py-12">
             <h2 class="text-2xl font-semibold mb-6 text-white">Skills</h2>
-            <div class="flex flex-wrap gap-3">
-                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Autodesk AutoCAD</span>
-                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">CATIA V6</span>
-                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">SolidWorks</span>
-                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">3DEXPERIENCE</span>
-                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Microsoft Office</span>
-                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Excel</span>
-                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Power BI</span>
-                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Microsoft Power Automate</span>
-                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Adobe Photoshop</span>
-                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Adobe Premiere</span>
-                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Technical Drawing</span>
-                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Problem Solving</span>
-                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Teamwork</span>
-                <span class="px-4 py-2 rounded-full bg-white/6 text-gray-100 text-sm hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer">Adaptability</span>
+            <div id="skill-carousel">
+                <div class="carousel-viewport">
+                    <div class="carousel-track" id="carousel-track"></div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn" id="carousel-prev">&#8249;</button>
+                    <div class="carousel-dots" id="carousel-dots"></div>
+                    <button class="carousel-btn" id="carousel-next">&#8250;</button>
+                </div>
             </div>
         </section>
 
@@ -149,7 +399,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Certification 1 -->
                 <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
-                    <img src="" alt="Power BI Training" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <img src="assets/PBIGastosCensurado.png" alt="Power BI Training" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                     <div class="p-5">
                         <h3 class="text-lg font-semibold text-white">PBI Descobridor</h3>
                         <p class="text-sm text-gray-400 mt-1">Power BI Training</p>
@@ -159,7 +409,7 @@
 
                 <!-- Certification 2 -->
                 <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
-                    <img src="" alt="ANSA Training" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <img src="assets/ScreenshotANSA.png" alt="ANSA Training" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                     <div class="p-5">
                         <h3 class="text-lg font-semibold text-white">ANSA Training</h3>
                         <p class="text-sm text-gray-400 mt-1">Mesh modeling for dynamic simulation</p>
@@ -169,7 +419,7 @@
 
                 <!-- Certification 3 -->
                 <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
-                    <img src="" alt="SolidWorks Course" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <img src="assets/Solidworks2025.png" alt="SolidWorks Course" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                     <div class="p-5">
                         <h3 class="text-lg font-semibold text-white">Intermediate SolidWorks Course</h3>
                         <p class="text-sm text-gray-400 mt-1">Modeling and simulation preparation</p>
@@ -182,86 +432,87 @@
         <!-- EXPERIENCE -->
         <section id="experience" class="max-w-5xl mx-auto px-6 py-12">
             <h2 class="text-2xl font-semibold mb-6 text-white">Experience & Education</h2>
-            <div class="relative">
-                <!-- Vertical line -->
-                <div class="hidden md:block absolute left-5 top-0 bottom-0 w-0.5 bg-primary rounded timeline-line"></div>
-                <div class="space-y-8">
-                    <!-- Entry 1 -->
-                    <div class="md:flex md:items-start md:gap-6">
-                        <div class="md:w-10 md:flex md:justify-center">
-                            <div class="w-3 h-3 rounded-full bg-primary mt-1 md:mt-0"></div>
-                        </div>
-                        <div class="mt-2 md:mt-0">
-                            <p class="text-sm text-primary font-medium">Education</p>
-                            <h3 class="text-lg font-semibold text-white">B.Sc. (Licenciatura) in Aerospace Engineering</h3>
-                            <p class="text-sm text-gray-400">Universidade do Minho — 09/2025 – Present</p>
-                            <p class="mt-2 text-gray-300">Currently pursuing a degree in Aerospace Engineering.</p>
-                        </div>
+            <div>
+                <!-- Entry 1 -->
+                <div class="md:flex md:gap-6">
+                    <div class="md:flex md:flex-col md:items-center md:w-10 md:flex-shrink-0">
+                        <div class="w-3 h-3 rounded-full bg-primary mt-1 flex-shrink-0"></div>
+                        <div class="hidden md:block w-0.5 flex-1 mt-1 bg-primary/30"></div>
                     </div>
-
-                    <!-- Entry 2 -->
-                    <div class="md:flex md:items-start md:gap-6">
-                        <div class="md:w-10 md:flex md:justify-center">
-                            <div class="w-3 h-3 rounded-full bg-primary mt-1 md:mt-0"></div>
-                        </div>
-                        <div class="mt-2 md:mt-0">
-                            <p class="text-sm text-primary font-medium">Internship</p>
-                            <h3 class="text-lg font-semibold text-white">Administrative Intern</h3>
-                            <p class="text-sm text-gray-400">CREA-MG, Brazil — 05/2024 – 02/2025</p>
-                            <p class="mt-2 text-gray-300">Supported government activities and procedural analysis. Assisted in document drafting, formatting, and data organization. Maintained internal spreadsheets and optimized workflows with MS PowerAutomate.</p>
-                        </div>
+                    <div class="mt-2 md:mt-0 md:pb-8">
+                        <p class="text-sm text-primary font-medium">Education</p>
+                        <h3 class="text-lg font-semibold text-white">B.Sc. (Licenciatura) in Aerospace Engineering</h3>
+                        <p class="text-sm text-gray-400">Universidade do Minho — 09/2025 – Present</p>
+                        <p class="mt-2 text-gray-300">Currently pursuing a degree in Aerospace Engineering.</p>
                     </div>
+                </div>
 
-                    <!-- Entry 3 -->
-                    <div class="md:flex md:items-start md:gap-6">
-                        <div class="md:w-10 md:flex md:justify-center">
-                            <div class="w-3 h-3 rounded-full bg-primary mt-1 md:mt-0"></div>
-                        </div>
-                        <div class="mt-2 md:mt-0">
-                            <p class="text-sm text-primary font-medium">Internship</p>
-                            <h3 class="text-lg font-semibold text-white">Administrative Intern</h3>
-                            <p class="text-sm text-gray-400">Woodgrove Consultoria, Brazil — 04/2023 – 09/2023</p>
-                            <p class="mt-2 text-gray-300">Conducted data analysis and generated management reports using Power BI. Coordinated travel bookings, visas, and insurance processes. Managed financial and corporate travel data.</p>
-                        </div>
+                <!-- Entry 2 -->
+                <div class="md:flex md:gap-6 mt-6 md:mt-0">
+                    <div class="md:flex md:flex-col md:items-center md:w-10 md:flex-shrink-0">
+                        <div class="w-3 h-3 rounded-full bg-primary mt-1 flex-shrink-0"></div>
+                        <div class="hidden md:block w-0.5 flex-1 mt-1 bg-primary/30"></div>
                     </div>
-
-                    <!-- Entry 4 -->
-                    <div class="md:flex md:items-start md:gap-6">
-                        <div class="md:w-10 md:flex md:justify-center">
-                            <div class="w-3 h-3 rounded-full bg-primary mt-1 md:mt-0"></div>
-                        </div>
-                        <div class="mt-2 md:mt-0">
-                            <p class="text-sm text-primary font-medium">Education</p>
-                            <h3 class="text-lg font-semibold text-white">B.Sc. in Aeronautical Engineering</h3>
-                            <p class="text-sm text-gray-400">Pontifical Catholic University of Minas Gerais — 08/2022 – 06/2025</p>
-                            <p class="mt-2 text-gray-300">Prior studies in Aeronautical Engineering, before transferring to Portugal.</p>
-                        </div>
+                    <div class="mt-2 md:mt-0 md:pb-8">
+                        <p class="text-sm text-primary font-medium">Internship</p>
+                        <h3 class="text-lg font-semibold text-white">Administrative Intern</h3>
+                        <p class="text-sm text-gray-400">CREA-MG, Brazil — 05/2024 – 02/2025</p>
+                        <p class="mt-2 text-gray-300">Supported government activities and procedural analysis. Assisted in document drafting, formatting, and data organization. Maintained internal spreadsheets and optimized workflows with MS PowerAutomate.</p>
                     </div>
+                </div>
 
-                    <!-- Entry 5 -->
-                    <div class="md:flex md:items-start md:gap-6">
-                        <div class="md:w-10 md:flex md:justify-center">
-                            <div class="w-3 h-3 rounded-full bg-primary mt-1 md:mt-0"></div>
-                        </div>
-                        <div class="mt-2 md:mt-0">
-                            <p class="text-sm text-primary font-medium">Experience</p>
-                            <h3 class="text-lg font-semibold text-white">High School Exchange Program (J-1 Program, USA)</h3>
-                            <p class="text-sm text-gray-400">Albuquerque, USA — 2021–2022 </p>
-                            <p class="mt-2 text-gray-300">Finished senior year in the USA, in a cultural exchange program, improving language skills and gaining international experience.</p>
-                        </div>
+                <!-- Entry 3 -->
+                <div class="md:flex md:gap-6 mt-6 md:mt-0">
+                    <div class="md:flex md:flex-col md:items-center md:w-10 md:flex-shrink-0">
+                        <div class="w-3 h-3 rounded-full bg-primary mt-1 flex-shrink-0"></div>
+                        <div class="hidden md:block w-0.5 flex-1 mt-1 bg-primary/30"></div>
                     </div>
+                    <div class="mt-2 md:mt-0 md:pb-8">
+                        <p class="text-sm text-primary font-medium">Internship</p>
+                        <h3 class="text-lg font-semibold text-white">Administrative Intern</h3>
+                        <p class="text-sm text-gray-400">Woodgrove Consultoria, Brazil — 04/2023 – 09/2023</p>
+                        <p class="mt-2 text-gray-300">Conducted data analysis and generated management reports using Power BI. Coordinated travel bookings, visas, and insurance processes. Managed financial and corporate travel data.</p>
+                    </div>
+                </div>
 
-                    <!-- Entry 6 -->
-                    <div class="md:flex md:items-start md:gap-6">
-                        <div class="md:w-10 md:flex md:justify-center">
-                            <div class="w-3 h-3 rounded-full bg-primary mt-1 md:mt-0"></div>
-                        </div>
-                        <div class="mt-2 md:mt-0">
-                            <p class="text-sm text-primary font-medium">Experience</p>
-                            <h3 class="text-lg font-semibold text-white">Assistant, Family Tourism Business</h3>
-                            <p class="text-sm text-gray-400">Lta Viagens e Turismo, Brazil — 2017 – 2021</p>
-                            <p class="mt-2 text-gray-300">Assisted in family business. Corporate and personal travel management, Emphasis on customer service with flight, hotel, and tour bookings. Produced promotional advertisements/publications and local travel guides.</p>
-                        </div>
+                <!-- Entry 4 -->
+                <div class="md:flex md:gap-6 mt-6 md:mt-0">
+                    <div class="md:flex md:flex-col md:items-center md:w-10 md:flex-shrink-0">
+                        <div class="w-3 h-3 rounded-full bg-primary mt-1 flex-shrink-0"></div>
+                        <div class="hidden md:block w-0.5 flex-1 mt-1 bg-primary/30"></div>
+                    </div>
+                    <div class="mt-2 md:mt-0 md:pb-8">
+                        <p class="text-sm text-primary font-medium">Education</p>
+                        <h3 class="text-lg font-semibold text-white">B.Sc. in Aeronautical Engineering</h3>
+                        <p class="text-sm text-gray-400">Pontifical Catholic University of Minas Gerais — 08/2022 – 06/2025</p>
+                        <p class="mt-2 text-gray-300">Prior studies in Aeronautical Engineering, before transferring to Portugal.</p>
+                    </div>
+                </div>
+
+                <!-- Entry 5 -->
+                <div class="md:flex md:gap-6 mt-6 md:mt-0">
+                    <div class="md:flex md:flex-col md:items-center md:w-10 md:flex-shrink-0">
+                        <div class="w-3 h-3 rounded-full bg-primary mt-1 flex-shrink-0"></div>
+                        <div class="hidden md:block w-0.5 flex-1 mt-1 bg-primary/30"></div>
+                    </div>
+                    <div class="mt-2 md:mt-0 md:pb-8">
+                        <p class="text-sm text-primary font-medium">Experience</p>
+                        <h3 class="text-lg font-semibold text-white">High School Exchange Program (J-1 Program, USA)</h3>
+                        <p class="text-sm text-gray-400">Albuquerque, USA — 2021–2022</p>
+                        <p class="mt-2 text-gray-300">Finished senior year in the USA, in a cultural exchange program, improving language skills and gaining international experience.</p>
+                    </div>
+                </div>
+
+                <!-- Entry 6 (last — no line below dot) -->
+                <div class="md:flex md:gap-6 mt-6 md:mt-0">
+                    <div class="md:flex md:flex-col md:items-center md:w-10 md:flex-shrink-0">
+                        <div class="w-3 h-3 rounded-full bg-primary mt-1 flex-shrink-0"></div>
+                    </div>
+                    <div class="mt-2 md:mt-0">
+                        <p class="text-sm text-primary font-medium">Experience</p>
+                        <h3 class="text-lg font-semibold text-white">Assistant, Family Tourism Business</h3>
+                        <p class="text-sm text-gray-400">Lta Viagens e Turismo, Brazil — 2018 – 2021</p>
+                        <p class="mt-2 text-gray-300">Assisted in family business. Corporate and personal travel management, Emphasis on customer service with flight, hotel, and tour bookings. Produced promotional advertisements/publications and local travel guides.</p>
                     </div>
                 </div>
             </div>
@@ -270,7 +521,7 @@
         <!-- CV -->
         <section id="cv" class="max-w-3xl mx-auto px-6 py-12 text-center">
             <div class="bg-[#0b1220]/60 border border-gray-800 rounded-lg p-8">
-                <a href="./cv.pdf" download class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-md shadow hover:-translate-y-1 transition duration-300 ease-in-out">Download CV</a>
+                <a href="./assets/VL_CV 26Q1 (ENG).pdf" download class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-md shadow hover:-translate-y-1 transition duration-300 ease-in-out">Download CV</a>
                 <p class="mt-4 text-gray-300">Available for internships & part-time collaborations.</p>
             </div>
         </section>
@@ -301,14 +552,13 @@
     </main>
 
     <script>
-        // Mobile menu toggle
+        // ============ MOBILE MENU TOGGLE ============
         const btn = document.getElementById('mobile-menu-button');
         const menu = document.getElementById('mobile-menu');
         const iconOpen = document.getElementById('icon-open');
         const iconClose = document.getElementById('icon-close');
         btn && btn.addEventListener('click', () => {
             const open = menu.classList.toggle('hidden');
-            // If hidden after toggle, menu is closed; update icons accordingly
             if (menu.classList.contains('hidden')) {
                 iconOpen.classList.remove('hidden');
                 iconClose.classList.add('hidden');
@@ -319,8 +569,496 @@
                 btn.setAttribute('aria-expanded','true');
             }
         });
-        // Close mobile menu on link click
         document.querySelectorAll('#mobile-menu a').forEach(a => a.addEventListener('click', () => menu.classList.add('hidden')));
+
+        // ============ TYPED.JS EFFECT ============
+        document.addEventListener('DOMContentLoaded', () => {
+            new Typed('#typed', {
+                strings: [
+                    'Aerospace Engineer (WIP)',
+                    'CAD Designer',
+                    'Data Analyst',
+                    'Problem Solver'
+                ],
+                typeSpeed: 60,
+                backSpeed: 40,
+                backDelay: 1500,
+                loop: true,
+                smartBackspace: true
+            });
+        });
+
+        // ============ PARTICLES.JS CONFIGURATION ============
+        window.addEventListener('load', () => {
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    particles: {
+                        number: { value: 60, density: { enable: true, value_area: 800 } },
+                        color: { value: '#6366f1' },
+                        shape: { type: 'circle' },
+                        opacity: { value: 0.5, random: true },
+                        size: { value: 3, random: true },
+                        line_linked: {
+                            enable: true,
+                            distance: 150,
+                            color: '#a78bfa',
+                            opacity: 0.4,
+                            width: 1
+                        },
+                        move: {
+                            enable: true,
+                            speed: 2,
+                            direction: 'none',
+                            random: false,
+                            straight: false,
+                            out_mode: 'out',
+                            bounce: false
+                        }
+                    },
+                    interactivity: {
+                        detect_on: 'canvas',
+                        events: {
+                            onhover: { enable: true, mode: 'repulse' },
+                            onclick: { enable: true, mode: 'push' },
+                            resize: true
+                        },
+                        modes: {
+                            repulse: { distance: 200, duration: 0.4 },
+                            push: { particles_nb: 4 }
+                        }
+                    },
+                    retina_detect: true
+                });
+            }
+        });
+
+        // ============ SCROLL-TRIGGERED FADE-IN ANIMATIONS ============
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // ============ 3D CARD TILT EFFECT ============
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card-3d');
+            if (typeof VanillaTilt !== 'undefined' && cards.length > 0) {
+                VanillaTilt.init(cards, {
+                    max: 8,
+                    speed: 400,
+                    glare: true,
+                    'max-glare': 0.2
+                });
+            }
+        });
+
+        // ============ STATS COUNTER ANIMATION ============
+        const countUp = (element, target, duration = 2000) => {
+            let current = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 16);
+        };
+
+        const counterObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.dataset.counted) {
+                    entry.target.dataset.counted = 'true';
+                    const target = parseInt(entry.target.getAttribute('data-target'));
+                    countUp(entry.target, target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.counter').forEach(counter => {
+            counterObserver.observe(counter);
+        });
+
+        // ============ SKILLS DATA ============
+        const CATS = [
+            { id:'engineering',  label:'Engineering',    color:'#3b82f6' },
+            { id:'software',     label:'Software',       color:'#06b6d4' },
+            { id:'datamgmt',     label:'Data Management',color:'#10b981' },
+            { id:'softskills',   label:'Soft Skills',    color:'#8b5cf6' },
+            { id:'hardware',     label:'Hardware',       color:'#f59e0b' },
+        ];
+        const SKILLS = [
+            // Engineering - CAD & Modeling
+            { id:'s1',  label:'SolidWorks', cat:'engineering', subcat:'cad-modeling', score:8 },
+            { id:'s2',  label:'AutoCAD', cat:'engineering', subcat:'cad-modeling', score:7 },
+            { id:'s3',  label:'3DEXPERIENCE', cat:'engineering', subcat:'cad-modeling', score:8 },
+            { id:'s4',  label:'Autodesk Fusion', cat:'engineering', subcat:'cad-modeling', score:7 },
+            { id:'s5',  label:'CATIA V6', cat:'engineering', subcat:'cad-modeling', score:9 },
+            { id:'s6',  label:'Tech Drawing', cat:'engineering', subcat:'cad-modeling', score:8 },
+            { id:'s7',  label:'Inventor', cat:'engineering', subcat:'cad-modeling', score:3 },
+            { id:'s8',  label:'FreeCAD', cat:'engineering', subcat:'cad-modeling', score:6 },
+            { id:'s9',  label:'Blender', cat:'engineering', subcat:'cad-modeling', score:7 },
+
+            // Engineering - Simulation & Analysis
+            { id:'s10', label:'CATIA V6', cat:'engineering', subcat:'simulation-analysis', score:9 },
+            { id:'s11', label:'FEM Analysis', cat:'engineering', subcat:'simulation-analysis', score:7 },
+            { id:'s12', label:'Nastran', cat:'engineering', subcat:'simulation-analysis', score:1 },
+            { id:'s13', label:'CFD Analysis', cat:'engineering', subcat:'simulation-analysis', score:5 },
+            { id:'s14', label:'Structural Dynamics', cat:'engineering', subcat:'simulation-analysis', score:5 },
+            { id:'s15', label:'Vibration Analysis', cat:'engineering', subcat:'simulation-analysis', score:5 },
+            { id:'s16', label:'Fatigue Analysis', cat:'engineering', subcat:'simulation-analysis', score:5 },
+            { id:'s17', label:'Aerodynamics Simulations', cat:'engineering', subcat:'simulation-analysis', score:3 },
+            { id:'s18', label:'Autodesk Fusion', cat:'engineering', subcat:'simulation-analysis', score:7 },
+
+            // Engineering - Manufacturing & Prototyping
+            { id:'s19', label:'CNC', cat:'engineering', subcat:'manufacturing-prototyping', score:3 },
+            { id:'s20', label:'CAM Software', cat:'engineering', subcat:'manufacturing-prototyping', score:6 },
+            { id:'s21', label:'3D Printing', cat:'engineering', subcat:'manufacturing-prototyping', score:8 },
+            { id:'s22', label:'Laser Cutting', cat:'engineering', subcat:'manufacturing-prototyping', score:5 },
+
+            // Software - Web Development
+            { id:'s23', label:'HTML', cat:'software', subcat:'web-development', score:8 },
+            { id:'s24', label:'CSS', cat:'software', subcat:'web-development', score:8 },
+            { id:'s25', label:'JavaScript', cat:'software', subcat:'web-development', score:7 },
+            { id:'s26', label:'Tailwind', cat:'software', subcat:'web-development', score:7 },
+            { id:'s27', label:'Adobe XD', cat:'software', subcat:'web-development', score:5 },
+            { id:'s28', label:'Photoshop', cat:'software', subcat:'web-development', score:10 },
+            { id:'s29', label:'Premiere Pro', cat:'software', subcat:'web-development', score:9 },
+            { id:'s30', label:'After Effects', cat:'software', subcat:'web-development', score:9 },
+            { id:'s31', label:'Canva', cat:'software', subcat:'web-development', score:10 },
+
+            // Software - Productivity & Automation
+            { id:'s32', label:'Excel', cat:'software', subcat:'productivity-automation', score:9 },
+            { id:'s33', label:'Power BI', cat:'software', subcat:'productivity-automation', score:9 },
+            { id:'s34', label:'MS Office', cat:'software', subcat:'productivity-automation', score:8 },
+            { id:'s35', label:'Microsoft Power Automate', cat:'software', subcat:'productivity-automation', score:7 },
+            { id:'s36', label:'Power Automate', cat:'software', subcat:'productivity-automation', score:7 },
+            { id:'s37', label:'Microsoft Azure', cat:'software', subcat:'productivity-automation', score:6 },
+            { id:'s38', label:'Docker', cat:'software', subcat:'productivity-automation', score:6 },
+            { id:'s39', label:'Agile/Scrum', cat:'software', subcat:'productivity-automation', score:8 },
+            { id:'s40', label:'Trello', cat:'software', subcat:'productivity-automation', score:8 },
+            { id:'s41', label:'IoT', cat:'software', subcat:'productivity-automation', score:9 },
+            { id:'s42', label:'Arduino', cat:'software', subcat:'productivity-automation', score:8 },
+            { id:'s43', label:'Linux', cat:'software', subcat:'productivity-automation', score:7 },
+
+            // Data Management - Data Analysis & Visualization
+            { id:'s44', label:'Power BI', cat:'datamgmt', subcat:'data-analysis-visualization', score:9 },
+            { id:'s45', label:'JavaScript', cat:'datamgmt', subcat:'data-analysis-visualization', score:7 },
+            { id:'s46', label:'Python', cat:'datamgmt', subcat:'data-analysis-visualization', score:7 },
+            { id:'s47', label:'MATLAB', cat:'datamgmt', subcat:'data-analysis-visualization', score:7 },
+            { id:'s48', label:'C/C++', cat:'datamgmt', subcat:'data-analysis-visualization', score:6 },
+            { id:'s49', label:'Java', cat:'datamgmt', subcat:'data-analysis-visualization', score:5 },
+            { id:'s50', label:'Git', cat:'datamgmt', subcat:'data-analysis-visualization', score:3 },
+            { id:'s51', label:'GitHub', cat:'datamgmt', subcat:'data-analysis-visualization', score:6 },
+            { id:'s52', label:'VS Code', cat:'datamgmt', subcat:'data-analysis-visualization', score:7 },
+            { id:'s53', label:'MySQL', cat:'datamgmt', subcat:'data-analysis-visualization', score:6 },
+            { id:'s54', label:'NumPy', cat:'datamgmt', subcat:'data-analysis-visualization', score:6 },
+            { id:'s55', label:'Matplotlib', cat:'datamgmt', subcat:'data-analysis-visualization', score:6 },
+            { id:'s56', label:'Octave', cat:'datamgmt', subcat:'data-analysis-visualization', score:9 },
+            { id:'s57', label:'Machine Learning', cat:'datamgmt', subcat:'data-analysis-visualization', score:4 },
+
+            // Soft Skills - Communication & Leadership
+            { id:'s58', label:'Public Speaking', cat:'softskills', subcat:'communication-leadership', score:7 },
+            { id:'s60', label:'Presentation Skills', cat:'softskills', subcat:'communication-leadership', score:9 },
+            { id:'s61', label:'Technical Writing', cat:'softskills', subcat:'communication-leadership', score:9 },
+            { id:'s62', label:'Project Management', cat:'softskills', subcat:'communication-leadership', score:9 },
+            { id:'s64', label:'Tidyness', cat:'softskills', subcat:'communication-leadership', score:10 },
+            { id:'s65', label:'Negotiation', cat:'softskills', subcat:'communication-leadership', score:6 },
+            { id:'s66', label:'Conflict Resolution', cat:'softskills', subcat:'communication-leadership', score:4 },
+
+            // Soft Skills - Cultural & International
+            { id:'s69', label:'International Business', cat:'softskills', subcat:'cultural-international', score:7 },
+            { id:'s70', label:'Portuguese', cat:'softskills', subcat:'cultural-international', score:10 },
+            { id:'s71', label:'Spanish', cat:'softskills', subcat:'cultural-international', score:7 },
+            { id:'s72', label:'French', cat:'softskills', subcat:'cultural-international', score:6 },
+            { id:'s73', label:'English', cat:'softskills', subcat:'cultural-international', score:10 },
+
+            // Soft Skills - Professional Development
+            { id:'s74', label:'Problem Solving', cat:'softskills', subcat:'professional-development', score:10 },
+            { id:'s75', label:'Time Management', cat:'softskills', subcat:'professional-development', score:8 },
+            { id:'s76', label:'Critical Thinking', cat:'softskills', subcat:'professional-development', score:10 },
+            { id:'s77', label:'Research Skills', cat:'softskills', subcat:'professional-development', score:10 },
+            { id:'s78', label:'Analytical Thinking', cat:'softskills', subcat:'professional-development', score:9 },
+            { id:'s79', label:'Innovation', cat:'softskills', subcat:'professional-development', score:8 },
+            { id:'s80', label:'Creativity', cat:'softskills', subcat:'professional-development', score:7 },
+            { id:'s81', label:'Entrepreneurship', cat:'softskills', subcat:'professional-development', score:7 },
+            { id:'s83', label:'Risk Management', cat:'softskills', subcat:'professional-development', score:5 },
+            { id:'s84', label:'Teamwork', cat:'softskills', subcat:'professional-development', score:7 },
+            { id:'s85', label:'Adaptability', cat:'softskills', subcat:'professional-development', score:10 },
+
+            // Hardware - Circuit Design & Analysis
+            { id:'s86', label:'Circuit Analysis', cat:'hardware', subcat:'circuit-design-analysis', score:6 },
+            { id:'s87', label:'Raspberry Pi', cat:'hardware', subcat:'circuit-design-analysis', score:9 },
+            { id:'s88', label:'Arduino', cat:'hardware', subcat:'circuit-design-analysis', score:8 },
+            { id:'s89', label:'Analog Electronics', cat:'hardware', subcat:'circuit-design-analysis', score:9 },
+            { id:'s90', label:'Microcontrollers', cat:'hardware', subcat:'circuit-design-analysis', score:6 },
+
+            // Hardware - Control Systems
+            { id:'s91', label:'Signal Systems', cat:'hardware', subcat:'control-systems', score:3 },
+            { id:'s92', label:'Instrumentation', cat:'hardware', subcat:'control-systems', score:6 },
+            { id:'s93', label:'Avionics', cat:'hardware', subcat:'control-systems', score:4 },
+            { id:'s94', label:'Control Theory', cat:'hardware', subcat:'control-systems', score:6 },
+            { id:'s95', label:'Robotics', cat:'hardware', subcat:'control-systems', score:4 },
+            { id:'s96', label:'Mechatronics', cat:'hardware', subcat:'control-systems', score:4 },
+            { id:'s97', label:'Embedded Systems', cat:'hardware', subcat:'control-systems', score:6 },
+
+            // Hardware - Technical Support
+            { id:'s98', label:'PC Building/Assembly', cat:'hardware', subcat:'technical-support', score:10 },
+            { id:'s99', label:'Phone/Laptop Repair', cat:'hardware', subcat:'technical-support', score:8 },
+            { id:'s100', label:'Hardware/Network Diagnostics', cat:'hardware', subcat:'technical-support', score:9 },
+            { id:'s101', label:'Hardware Troubleshooting', cat:'hardware', subcat:'technical-support', score:9 },
+            { id:'s102', label:'Component Testing', cat:'hardware', subcat:'technical-support', score:10 },
+            { id:'s103', label:'System Maintenance', cat:'hardware', subcat:'technical-support', score:8 },
+            { id:'s104', label:'Windows', cat:'hardware', subcat:'technical-support', score:10 },
+            { id:'s105', label:'Linux', cat:'hardware', subcat:'technical-support', score:7 },
+        ];
+
+        // ============ SKILL CAROUSEL ============
+        const SUBCATS_MAP = {
+            'engineering': ['CAD & Modeling','Simulation & Analysis','Manufacturing & Prototyping'],
+            'software':    ['Web Development','Productivity & Automation'],
+            'datamgmt':    ['Data Analysis & Visualization'],
+            'softskills':  ['Communication & Leadership','Cultural & International','Professional Development'],
+            'hardware':    ['Circuit Design & Analysis','Control Systems','Technical Support'],
+        };
+        const CAT_DESC = {
+            'engineering':  'CAD, simulation, manufacturing',
+            'software':     'Web, tools & automation',
+            'datamgmt':     'Data analysis & coding',
+            'softskills':   'Communication & languages',
+            'hardware':     'Electronics & control systems',
+        };
+
+        function initSkillCarousel() {
+            const track   = document.getElementById('carousel-track');
+            const dotsEl  = document.getElementById('carousel-dots');
+            const prevBtn = document.getElementById('carousel-prev');
+            const nextBtn = document.getElementById('carousel-next');
+            if (!track) return;
+
+            const total = CATS.length;
+            let current = 0;
+            const subMap = {
+                'CAD & Modeling':'cad-modeling',
+                'Simulation & Analysis':'simulation-analysis',
+                'Manufacturing & Prototyping':'manufacturing-prototyping',
+                'Web Development':'web-development',
+                'Productivity & Automation':'productivity-automation',
+                'Data Analysis & Visualization':'data-analysis-visualization',
+                'Communication & Leadership':'communication-leadership',
+                'Cultural & International':'cultural-international',
+                'Professional Development':'professional-development',
+                'Circuit Design & Analysis':'circuit-design-analysis',
+                'Control Systems':'control-systems',
+                'Technical Support':'technical-support',
+            };
+
+            function buildCardHTML(cat) {
+                const catSkills = SKILLS.filter(s => s.cat === cat.id);
+                const subcats   = SUBCATS_MAP[cat.id] || [];
+                const sections  = subcats.map(sub => {
+                    const subSkills = catSkills.filter(s => s.subcat === subMap[sub]);
+                    if (!subSkills.length) return '';
+                    const pills = subSkills.map(sk => {
+                        const sz = (0.72 + sk.score * 0.022).toFixed(3);
+                        const op = (0.45 + sk.score * 0.055).toFixed(3);
+                        return `<span class="skill-pill" style="font-size:${sz}rem;opacity:${op};background:${cat.color}18;color:${cat.color};border-color:${cat.color}33">${sk.label}</span>`;
+                    }).join('');
+                    return `<p class="skill-subcat-label">${sub}</p><div class="skill-pills">${pills}</div>`;
+                }).join('');
+                return `
+                    <div class="skill-card-accent" style="background:${cat.color}"></div>
+                    <h3 style="color:${cat.color}">${cat.label}</h3>
+                    <p class="skill-card-desc">${CAT_DESC[cat.id] || ''}</p>
+                    ${sections}
+                `;
+            }
+
+            const cards = CATS.map(cat => {
+                const card = document.createElement('div');
+                card.className = 'skill-card';
+                card.innerHTML = buildCardHTML(cat);
+                track.appendChild(card);
+                return card;
+            });
+
+            dotsEl.innerHTML = CATS.map((_, i) =>
+                `<div class="carousel-dot${i === 0 ? ' active' : ''}"></div>`
+            ).join('');
+            const dots = Array.from(dotsEl.querySelectorAll('.carousel-dot'));
+
+            // Clear inline overrides so CSS transitions drive all position changes
+            function updatePositions() {
+                cards.forEach((card, i) => {
+                    let pos = i - current;
+                    if (pos > 2)  pos -= total;
+                    if (pos < -2) pos += total;
+                    card.dataset.pos = pos;
+                    card.style.transition = '';
+                    card.style.transform  = '';
+                    card.style.opacity    = '';
+                });
+                dots.forEach((d, i) => d.classList.toggle('active', i === current));
+            }
+
+            // Auto-advance every 5 s; resets on any interaction
+            let autoTimer;
+            function resetTimer() {
+                clearInterval(autoTimer);
+                autoTimer = setInterval(() => goTo(current + 1), 5000);
+            }
+
+            function goTo(index) {
+                current = ((index % total) + total) % total;
+                updatePositions();
+                resetTimer();
+            }
+
+            prevBtn.addEventListener('click', () => goTo(current - 1));
+            nextBtn.addEventListener('click', () => goTo(current + 1));
+            dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+
+            // Drag / swipe shared logic
+            let startX = 0, dragX = 0, dragging = false, didDrag = false;
+            const getActive = () => cards.find(c => c.dataset.pos === '0');
+
+            function onStart(x) {
+                startX = x; dragX = 0; dragging = true; didDrag = false;
+                clearInterval(autoTimer);
+                const ac = getActive();
+                if (ac) ac.style.transition = 'none';
+            }
+            function onMove(x) {
+                if (!dragging) return;
+                dragX = x - startX;
+                if (Math.abs(dragX) > 5) didDrag = true;
+                const ac = getActive();
+                if (ac) {
+                    ac.style.transform = `translateX(calc(-50% + ${dragX}px)) scale(1) rotateZ(${dragX * 0.025}deg)`;
+                    ac.style.opacity = String(Math.max(0.4, 1 - Math.abs(dragX) / 400));
+                }
+            }
+            function onEnd() {
+                if (!dragging) return;
+                dragging = false;
+                if (Math.abs(dragX) > 80) {
+                    goTo(current + (dragX < 0 ? 1 : -1));
+                } else {
+                    updatePositions();
+                    resetTimer();
+                }
+            }
+
+            // Touch (mobile)
+            track.addEventListener('touchstart', e => onStart(e.touches[0].clientX), { passive: true });
+            track.addEventListener('touchmove',  e => { if (dragging) onMove(e.touches[0].clientX); }, { passive: true });
+            track.addEventListener('touchend',   () => onEnd());
+
+            // Mouse drag from center card (desktop)
+            track.addEventListener('mousedown', e => {
+                const card = e.target.closest('.skill-card');
+                if (!card || card.dataset.pos !== '0') return;
+                onStart(e.clientX);
+            });
+            track.addEventListener('mousemove',  e => { if (dragging) onMove(e.clientX); });
+            track.addEventListener('mouseup',    () => { if (dragging) onEnd(); });
+            track.addEventListener('mouseleave', () => { if (dragging) onEnd(); });
+
+            // Click side cards (desktop) — skip if a drag occurred
+            track.addEventListener('click', e => {
+                if (window.innerWidth <= 768 || didDrag) { didDrag = false; return; }
+                const card = e.target.closest('.skill-card');
+                if (!card) return;
+                const pos = parseInt(card.dataset.pos);
+                if (pos === -1) goTo(current - 1);
+                else if (pos === 1) goTo(current + 1);
+            });
+
+            updatePositions();
+            resetTimer();
+        }
+
+        document.addEventListener('DOMContentLoaded', initSkillCarousel);
+
+
+        // ============ ACTIVE NAVBAR HIGHLIGHT ============
+        const navLinks = document.querySelectorAll('.nav-link');
+        const navObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                const id = entry.target.getAttribute('id');
+                const link = document.querySelector(`.nav-link[data-section="${id}"]`);
+                if (link) {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(l => {
+                            l.style.color = '#9ca3af';
+                            l.style.textShadow = 'none';
+                        });
+                        link.style.color = '#A30002';
+                        link.style.textShadow = '0 0 8px rgba(163, 0, 2, 0.6)';
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('section[id]').forEach(section => {
+            navObserver.observe(section);
+        });
+
+        // ============ CUSTOM CURSOR GLOW ============
+        const cursor = document.createElement('div');
+        cursor.style.position = 'fixed';
+        cursor.style.width = '30px';
+        cursor.style.height = '30px';
+        cursor.style.borderRadius = '50%';
+        cursor.style.background = 'radial-gradient(circle, rgba(163, 0, 2, 0.3), transparent)';
+        cursor.style.pointerEvents = 'none';
+        cursor.style.zIndex = '9999';
+        cursor.style.boxShadow = '0 0 20px rgba(163, 0, 2, 0.4)';
+        cursor.style.transition = 'all 0.05s ease';
+        document.body.appendChild(cursor);
+
+        const dot = document.createElement('div');
+        dot.style.position = 'fixed';
+        dot.style.width = '8px';
+        dot.style.height = '8px';
+        dot.style.borderRadius = '50%';
+        dot.style.background = '#A30002';
+        dot.style.pointerEvents = 'none';
+        dot.style.zIndex = '10000';
+        dot.style.boxShadow = '0 0 15px rgba(163, 0, 2, 0.5)';
+        dot.style.transition = 'all 0.02s ease';
+        document.body.appendChild(dot);
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = (e.clientX - 15) + 'px';
+            cursor.style.top = (e.clientY - 15) + 'px';
+            dot.style.left = (e.clientX - 4) + 'px';
+            dot.style.top = (e.clientY - 4) + 'px';
+        });
+
+        // Hide cursor when leaving window
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = '0';
+            dot.style.opacity = '0';
+        });
+
+        document.addEventListener('mouseenter', () => {
+            cursor.style.opacity = '1';
+            dot.style.opacity = '1';
+        });
     </script>
 </body>
 </html>
