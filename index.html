@@ -343,7 +343,7 @@
             <h2 class="text-2xl font-semibold mb-6 text-white">Projects</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Project 1 -->
-                <div class="group card-3d bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
+                <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
                     <img src="assets/VitastiqSite.gif" alt="Portfolio Website" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                     <div class="p-5">
                         <h3 class="text-lg font-semibold text-white">Website Development</h3>
@@ -357,7 +357,7 @@
                 </div>
 
                 <!-- Project 2 -->
-                <div class="group card-3d bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
+                <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
                     <img src="assets/CessnaCATIA.png" alt="Cessna Aircraft CAD Model" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                     <div class="p-5">
                         <h3 class="text-lg font-semibold text-white">Cessna Aircraft CAD Model</h3>
@@ -367,7 +367,7 @@
                 </div>
 
                 <!-- Project 3 -->
-                <div class="group card-3d bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
+                <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
                     <img src="assets/FEM3dx.jpg" alt="FEM Structural Analysis" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                     <div class="p-5">
                         <h3 class="text-lg font-semibold text-white">FEM Structural Analysis</h3>
@@ -530,15 +530,15 @@
         <section id="contact" class="max-w-5xl mx-auto px-6 py-12">
             <h2 class="text-2xl font-semibold mb-6 text-white">Contact</h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <a href="mailto:vitorladpt@gmail.com" class="block bg-[#071025]/60 border border-gray-800 rounded-lg p-6 hover:-translate-y-1 transition duration-300 ease-in-out">
+                <a href="mailto:vitorladpt@gmail.com" class="group card-3d bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden p-6 transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
                     <p class="text-sm text-gray-400">Email</p>
                     <p class="mt-2 text-white font-semibold">vitorladpt@gmail.com</p>
                 </a>
-                <a href="https://www.linkedin.com/in/vitor-ladeira" target="_blank" rel="noreferrer" class="block bg-[#071025]/60 border border-gray-800 rounded-lg p-6 hover:-translate-y-1 transition duration-300 ease-in-out">
+                <a href="https://www.linkedin.com/in/vitor-ladeira" target="_blank" rel="noreferrer" class="group card-3d bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden p-6 transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
                     <p class="text-sm text-gray-400">LinkedIn</p>
                     <p class="mt-2 text-white font-semibold">/in/vitor-ladeira</p>
                 </a>
-                <a href="https://github.com/v-ladeira" target="_blank" rel="noreferrer" class="block bg-[#071025]/60 border border-gray-800 rounded-lg p-6 hover:-translate-y-1 transition duration-300 ease-in-out">
+                <a href="https://github.com/v-ladeira" target="_blank" rel="noreferrer" class="group card-3d bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden p-6 transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
                     <p class="text-sm text-gray-400">GitHub</p>
                     <p class="mt-2 text-white font-semibold">github.com/v-ladeira</p>
                 </a>
@@ -976,6 +976,23 @@
             track.addEventListener('mousemove',  e => { if (dragging) onMove(e.clientX); });
             track.addEventListener('mouseup',    () => { if (dragging) onEnd(); });
             track.addEventListener('mouseleave', () => { if (dragging) onEnd(); });
+
+            // Scroll / trackpad gestures to change cards
+            let wheelLocked = false;
+            track.addEventListener('wheel', e => {
+                const dx = Math.abs(e.deltaX);
+                const dy = Math.abs(e.deltaY);
+                if (dx < 12 && dy < 12) return;
+                e.preventDefault();
+                if (wheelLocked) return;
+                wheelLocked = true;
+                if (dx > dy) {
+                    goTo(current + (e.deltaX > 0 ? 1 : -1));
+                } else {
+                    goTo(current + (e.deltaY > 0 ? 1 : -1));
+                }
+                setTimeout(() => wheelLocked = false, 150);
+            }, { passive: false });
 
             // Click side cards (desktop) — skip if a drag occurred
             track.addEventListener('click', e => {
