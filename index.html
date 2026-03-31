@@ -39,74 +39,18 @@
             background-color: #000000;
             background-image:
                 url('assets/dots-pattern.webp'),
-                radial-gradient(circle at 50% 12%, rgba(255, 67, 67, 0.14), transparent 42%),
-                radial-gradient(circle at 85% 95%, rgba(211, 39, 39, 0.12), transparent 55%);
+                radial-gradient(circle at 50% 12%, rgba(255, 67, 67, 0.14), transparent 22%),
+                radial-gradient(circle at 85% 95%, rgba(211, 39, 39, 0.12), transparent 35%);
             background-position: 50% 100%, 50% 18%, 80% 92%;
             background-repeat: repeat, no-repeat, no-repeat;
             background-size: 30px, 160% 160%, 180% 180%;
             color: #e5e7eb;
+            overflow-x: hidden;
         }
 
         section {
             position: relative;
             overflow: hidden;
-        }
-
-        section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            opacity: 0.13;
-            z-index: -1;
-            background-repeat: repeat;
-            background-image: url('assets/dots-pattern.webp');
-            background-position: 50% 100%;
-            background-size: 30px;
-        }
-
-        #home::before {
-            background-image:
-                radial-gradient(circle at 42% 16%, rgba(255, 75, 75, 0.2), transparent 48%),
-                radial-gradient(circle at 80% 80%, rgba(255, 10, 10, 0.13), transparent 52%),
-                url('assets/dots-pattern.webp');
-        }
-
-        #about::before {
-            background-image:
-                radial-gradient(circle at 18% 25%, rgba(255, 35, 35, 0.15), transparent 48%),
-                radial-gradient(circle at 65% 88%, rgba(252, 61, 61, 0.1), transparent 52%),
-                url('assets/dots-pattern.webp');
-        }
-
-        #projects::before {
-            background-image:
-                radial-gradient(circle at 45% 24%, rgba(255, 16, 16, 0.12), transparent 47%),
-                radial-gradient(circle at 87% 82%, rgba(245, 55, 55, 0.09), transparent 56%),
-                url('assets/dots-pattern.webp');
-        }
-
-        #skills::before {
-            background-image:
-                radial-gradient(circle at 35% 28%, rgba(255, 80, 80, 0.17), transparent 45%),
-                radial-gradient(circle at 75% 78%, rgba(225, 40, 40, 0.09), transparent 55%),
-                url('assets/dots-pattern.webp');
-        }
-
-        #experience::before {
-            background-image:
-                radial-gradient(circle at 20% 20%, rgba(255, 45, 45, 0.13), transparent 50%),
-                radial-gradient(circle at 70% 80%, rgba(193, 14, 14, 0.08), transparent 58%),
-                url('assets/dots-pattern.webp');
-        }
-
-        #certifications::before,
-        #cv::before,
-        #contact::before {
-            background-image:
-                radial-gradient(circle at 50% 30%, rgba(215, 50, 50, 0.11), transparent 50%),
-                radial-gradient(circle at 82% 90%, rgba(240, 40, 40, 0.07), transparent 58%),
-                url('assets/dots-pattern.webp');
         }
 
         /* Navbar active link highlight */
@@ -143,17 +87,24 @@
             color: #A30002;
         }
 
-        /* Custom cursor - hide default cursor */
-        * {
-            cursor: none !important;
-        }
-
         /* Particles.js background */
         #particles-js {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            top: -4rem;
+            left: 50%;
+            width: min(2000px, 100vw);
+            max-width: 2000px;
+            height: calc(100% + 4rem);
             z-index: 1;
+            pointer-events: none;
+            transform: translateX(-50%);
+        }
+        #particles-js::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(90deg, rgba(0,0,0,0.92) 0%, transparent 12%, transparent 88%, rgba(0,0,0,0.92) 100%);
         }
         .hero-container {
             position: relative;
@@ -282,12 +233,25 @@
                 <span class="sr-only">Vitor Ladeira</span>
             </a>
             <div class="hidden md:flex items-center gap-6 text-gray-200">
-                <a href="#about" data-section="about" class="nav-link hover:text-primary transition-colors duration-300">About</a>
-                <a href="#projects" data-section="projects" class="nav-link hover:text-primary transition-colors duration-300">Projects</a>
-                <a href="#skills" data-section="skills" class="nav-link hover:text-primary transition-colors duration-300">Skills</a>
-                <a href="#experience" data-section="experience" class="nav-link hover:text-primary transition-colors duration-300">Experience</a>
-                <a href="#cv" data-section="cv" class="nav-link hover:text-primary transition-colors duration-300">CV</a>
-                <a href="#contact" data-section="contact" class="nav-link hover:text-primary transition-colors duration-300">Contact</a>
+                <a href="#about" data-section="about" data-i18n="nav.about" class="nav-link hover:text-primary transition-colors duration-300">About</a>
+                <a href="#projects" data-section="projects" data-i18n="nav.projects" class="nav-link hover:text-primary transition-colors duration-300">Projects</a>
+                <a href="#skills" data-section="skills" data-i18n="nav.skills" class="nav-link hover:text-primary transition-colors duration-300">Skills</a>
+                <a href="#experience" data-section="experience" data-i18n="nav.experience" class="nav-link hover:text-primary transition-colors duration-300">Experience</a>
+                <a href="#cv" data-section="cv" data-i18n="nav.cv" class="nav-link hover:text-primary transition-colors duration-300">CV</a>
+                <a href="#contact" data-section="contact" data-i18n="nav.contact" class="nav-link hover:text-primary transition-colors duration-300">Contact</a>
+                <div class="relative" id="lang-switcher-desktop">
+                    <button id="lang-btn-desktop" class="flex items-center gap-1 text-gray-400 hover:text-primary transition-colors duration-300 text-sm font-medium border border-gray-700 rounded px-2 py-1 hover:border-primary">
+                        <span id="lang-label-desktop">EN</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                    </button>
+                    <div id="lang-dropdown-desktop" class="hidden absolute right-0 top-full mt-1 bg-gray-900 border border-gray-700 rounded-md shadow-lg overflow-hidden z-50 min-w-[56px]">
+                        <button data-lang="en" class="lang-option block w-full text-left px-3 py-1.5 text-sm text-gray-300 hover:bg-white/10 hover:text-primary transition-colors">EN</button>
+                        <button data-lang="pt" class="lang-option block w-full text-left px-3 py-1.5 text-sm text-gray-300 hover:bg-white/10 hover:text-primary transition-colors">PT</button>
+                        <button data-lang="de" class="lang-option block w-full text-left px-3 py-1.5 text-sm text-gray-300 hover:bg-white/10 hover:text-primary transition-colors">DE</button>
+                        <button data-lang="fr" class="lang-option block w-full text-left px-3 py-1.5 text-sm text-gray-300 hover:bg-white/10 hover:text-primary transition-colors">FR</button>
+                        <button data-lang="es" class="lang-option block w-full text-left px-3 py-1.5 text-sm text-gray-300 hover:bg-white/10 hover:text-primary transition-colors">ES</button>
+                    </div>
+                </div>
             </div>
             <div class="md:hidden">
                 <button id="mobile-menu-button" aria-expanded="false" aria-controls="mobile-menu" class="p-2 rounded-md text-gray-200 hover:bg-white/5 focus:outline-none">
@@ -303,29 +267,38 @@
         <!-- Mobile menu -->
         <div id="mobile-menu" class="md:hidden px-6 pb-4 hidden">
             <div class="flex flex-col gap-3">
-                <a href="#about" class="block py-2 px-3 rounded hover:bg-white/5">About</a>
-                <a href="#projects" class="block py-2 px-3 rounded hover:bg-white/5">Projects</a>
-                <a href="#skills" class="block py-2 px-3 rounded hover:bg-white/5">Skills</a>
-                <a href="#experience" class="block py-2 px-3 rounded hover:bg-white/5">Experience</a>
-                <a href="#cv" class="block py-2 px-3 rounded hover:bg-white/5">CV</a>
-                <a href="#contact" class="block py-2 px-3 rounded hover:bg-white/5">Contact</a>
+                <a href="#about" data-i18n="nav.about" class="block py-2 px-3 rounded hover:bg-white/5">About</a>
+                <a href="#projects" data-i18n="nav.projects" class="block py-2 px-3 rounded hover:bg-white/5">Projects</a>
+                <a href="#skills" data-i18n="nav.skills" class="block py-2 px-3 rounded hover:bg-white/5">Skills</a>
+                <a href="#experience" data-i18n="nav.experience" class="block py-2 px-3 rounded hover:bg-white/5">Experience</a>
+                <a href="#cv" data-i18n="nav.cv" class="block py-2 px-3 rounded hover:bg-white/5">CV</a>
+                <a href="#contact" data-i18n="nav.contact" class="block py-2 px-3 rounded hover:bg-white/5">Contact</a>
+                <div class="border-t border-gray-800 pt-3 mt-1">
+                    <div class="flex gap-2 flex-wrap">
+                        <button data-lang="en" class="lang-option px-3 py-1 text-sm rounded border border-gray-700 text-gray-300 hover:border-primary hover:text-primary transition-colors">EN</button>
+                        <button data-lang="pt" class="lang-option px-3 py-1 text-sm rounded border border-gray-700 text-gray-300 hover:border-primary hover:text-primary transition-colors">PT</button>
+                        <button data-lang="de" class="lang-option px-3 py-1 text-sm rounded border border-gray-700 text-gray-300 hover:border-primary hover:text-primary transition-colors">DE</button>
+                        <button data-lang="fr" class="lang-option px-3 py-1 text-sm rounded border border-gray-700 text-gray-300 hover:border-primary hover:text-primary transition-colors">FR</button>
+                        <button data-lang="es" class="lang-option px-3 py-1 text-sm rounded border border-gray-700 text-gray-300 hover:border-primary hover:text-primary transition-colors">ES</button>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
 
     <main id="home" class="pt-24">
         <!-- HERO with Particles background -->
-        <section class="max-w-5xl mx-auto px-6 py-16 text-center relative">
-            <div id="particles-js" class="absolute top-0 left-0 w-full h-96"></div>
+        <section class="max-w-5xl mx-auto px-6 py-16 text-center relative overflow-visible">
+            <div id="particles-js"></div>
             <div class="hero-container relative z-10">
                 <h1 class="text-4xl sm:text-5xl font-extrabold text-white gradient-text">Vitor Ladeira</h1>
                 <p class="mt-3 text-lg text-gray-300">
                     <span id="typed" class="text-indigo-400"></span>
                 </p>
-                <p class="mt-4 text-gray-300 max-w-2xl mx-auto">Aspiring aerospace engineer with international academic and professional experience, combining strong analytical ability, adaptability, and teamwork.</p>
+                <p class="mt-4 text-gray-300 max-w-2xl mx-auto" data-i18n="hero.description">Aspiring aerospace engineer with international academic and professional experience, combining strong analytical ability, adaptability, and teamwork.</p>
                 <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="#projects" class="inline-flex items-center gap-2 bg-primary text-white px-5 py-3 rounded-md shadow hover:-translate-y-1 transform transition duration-300 ease-in-out">View Projects</a>
-                    <a href="./assets/VL_CV 26Q1 (ENG).pdf" download class="inline-flex items-center gap-2 border border-gray-700 text-gray-100 px-5 py-3 rounded-md hover:border-primary hover:text-primary transition duration-300 ease-in-out">Download CV</a>
+                    <a href="#projects" data-i18n="hero.view-projects" class="inline-flex items-center gap-2 bg-primary text-white px-5 py-3 rounded-md shadow hover:-translate-y-1 transform transition duration-300 ease-in-out">View Projects</a>
+                    <a href="./assets/VL_CV 26Q1 (ENG).pdf" download data-i18n="hero.download-cv" class="inline-flex items-center gap-2 border border-gray-700 text-gray-100 px-5 py-3 rounded-md hover:border-primary hover:text-primary transition duration-300 ease-in-out">Download CV</a>
                 </div>
             </div>
         </section>
@@ -333,22 +306,25 @@
         <!-- ABOUT -->
         <section id="about" class="max-w-5xl mx-auto px-6 py-12">
             <div class="bg-[#0b1220]/60 border border-gray-800 rounded-lg p-6">
-                <h2 class="text-2xl font-semibold mb-4 text-white">About</h2>
-                <p class="text-gray-300">Hi! I’m an aspiring aerospace engineer with international academic and professional experience. I'm driven by my own curiosity and a passion for problem-solving. I’m currently studying Aerospace Engineering at the Universidade do Minho, after beginning my journey in Aeronautical Engineering in Brazil. Along the way, I’ve developed strong analytical skills, adaptability, and a collaborative mindset. Through internships and international experiences, I’ve gained hands-on experience in data management, CAD modeling, and working in tandem with diverse, cross-cultural teams.</p>
+                <h2 class="text-2xl font-semibold mb-4 text-white" data-i18n="about.heading">About</h2>
+                <p class="text-gray-300" data-i18n="about.text">Hi! I’m an aspiring aerospace engineer with international academic and professional experience. I'm driven by my own curiosity and a passion for problem-solving. I’m currently studying Aerospace Engineering at the Universidade do Minho, after beginning my journey in Aeronautical Engineering in Brazil. Along the way, I’ve developed strong analytical skills, adaptability, and a collaborative mindset. Through internships and international experiences, I’ve gained hands-on experience in data management, CAD modeling, and working in tandem with diverse, cross-cultural teams.</p>
             </div>
         </section>
 
         <!-- PROJECTS -->
         <section id="projects" class="max-w-6xl mx-auto px-6 py-12">
-            <h2 class="text-2xl font-semibold mb-6 text-white">Projects</h2>
+            <h2 class="text-2xl font-semibold mb-6 text-white" data-i18n="projects.heading">Projects</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Project 1 -->
                 <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
-                    <img src="assets/VitastiqSite.gif" alt="Portfolio Website" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="relative w-full h-48 overflow-hidden" id="vitastiq-wrapper">
+                        <canvas id="vitastiq-canvas" class="absolute inset-0 w-full h-full" style="transition:opacity 0.35s;"></canvas>
+                        <img id="vitastiq-gif" src="assets/VitastiqSite.gif" alt="Portfolio Website" class="absolute inset-0 w-full h-full object-cover" style="opacity:0;transition:opacity 0.35s;">
+                    </div>
                     <div class="p-5">
                         <h3 class="text-lg font-semibold text-white">Website Development</h3>
-                    <p class="text-sm text-gray-400 mt-1">Web Development</p>
-                    <p class="mt-3 text-gray-300">Some personal and some joint websites built with HTML5, TailwindCSS, and modern web design principles. Showcasing professional work and expertise. Examples include:<br>
+                    <p class="text-sm text-gray-400 mt-1" data-i18n="proj1.type">Web Development</p>
+                    <p class="mt-3 text-gray-300" data-i18n="proj1.desc">Some personal and some joint websites built with HTML5, TailwindCSS, and modern web design principles. Showcasing professional work and expertise. Examples include:<br>
                         <a href="https://vitastiq.pt/" target="_blank" rel="noopener noreferrer" class="text-primary">Vitastiq.pt</a> |
                         <a href="https://teoricar.com.br/" target="_blank" rel="noopener noreferrer" class="text-primary">Teoricar.com.br</a> |
                         <a href="https://www.vtec.com.br/" target="_blank" rel="noopener noreferrer" class="text-primary">VTEC.com.br</a> <em>(WIP)</em>
@@ -358,21 +334,27 @@
 
                 <!-- Project 2 -->
                 <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
-                    <img src="assets/CessnaCATIA.png" alt="Cessna Aircraft CAD Model" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="relative w-full h-48 overflow-hidden">
+                        <img src="assets/CessnaCATIA.png" alt="Cessna Aircraft CAD Model" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:opacity-0 group-hover:scale-105">
+                        <img src="assets/CessnaCATIA.gif" alt="Cessna Aircraft CAD Model animated" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                    </div>
                     <div class="p-5">
                         <h3 class="text-lg font-semibold text-white">Cessna Aircraft CAD Model</h3>
-                    <p class="text-sm text-gray-400 mt-1">CAD Modeling | CATIA V6</p>
-                    <p class="mt-3 text-gray-300">Detailed 3D CAD model of a Cessna aircraft designed in CATIA V6. Demonstrates proficiency in parametric design and aerospace component modeling.</p>
+                    <p class="text-sm text-gray-400 mt-1" data-i18n="proj2.type">CAD Modeling | CATIA V6</p>
+                    <p class="mt-3 text-gray-300" data-i18n="proj2.desc">Detailed 3D CAD model of a Cessna aircraft designed in CATIA V6 for academic project. Demonstrates proficiency in parametric design and aerospace component modeling.</p>
                     </div>
                 </div>
 
                 <!-- Project 3 -->
                 <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
-                    <img src="assets/FEM3dx.jpg" alt="FEM Structural Analysis" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="relative w-full h-48 overflow-hidden">
+                        <img src="assets/FEM3dx.jpg" alt="FEM Structural Analysis" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:opacity-0 group-hover:scale-105">
+                        <img src="assets/FEM_Topology.gif" alt="FEM Topology Optimization animated" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                    </div>
                     <div class="p-5">
                         <h3 class="text-lg font-semibold text-white">FEM Structural Analysis</h3>
-                    <p class="text-sm text-gray-400 mt-1">FEM Simulation | Autodesk Fusion</p>
-                    <p class="mt-3 text-gray-300">Finite Element Method (FEM) simulation and structural analysis performed in Autodesk Fusion. Analyzing stress distribution and component performance under load conditions.</p>
+                    <p class="text-sm text-gray-400 mt-1" data-i18n="proj3.type">FEM Simulation | Autodesk Fusion</p>
+                    <p class="mt-3 text-gray-300" data-i18n="proj3.desc">Finite Element Method (FEM) simulation and structural analysis performed in Autodesk Fusion. Analyzing stress distribution and preparing for topology optimization for academic project.</p>
                     </div>
                 </div>
             </div>
@@ -380,7 +362,7 @@
 
         <!-- SKILLS -->
         <section id="skills" class="max-w-6xl mx-auto px-6 py-12">
-            <h2 class="text-2xl font-semibold mb-6 text-white">Skills</h2>
+            <h2 class="text-2xl font-semibold mb-6 text-white" data-i18n="skills.heading">Skills</h2>
             <div id="skill-carousel">
                 <div class="carousel-viewport">
                     <div class="carousel-track" id="carousel-track"></div>
@@ -395,15 +377,15 @@
 
         <!-- CERTIFICATIONS -->
         <section id="certifications" class="max-w-6xl mx-auto px-6 py-12">
-            <h2 class="text-2xl font-semibold mb-6 text-white">Certifications & Training</h2>
+            <h2 class="text-2xl font-semibold mb-6 text-white" data-i18n="certs.heading">Certifications & Training</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Certification 1 -->
                 <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
                     <img src="assets/PBIGastosCensurado.png" alt="Power BI Training" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                     <div class="p-5">
                         <h3 class="text-lg font-semibold text-white">PBI Descobridor</h3>
-                        <p class="text-sm text-gray-400 mt-1">Power BI Training</p>
-                        <p class="mt-3 text-gray-300">Comprehensive training in Power BI for data analysis and visualization.</p>
+                        <p class="text-sm text-gray-400 mt-1" data-i18n="cert1.type">Power BI Training</p>
+                        <p class="mt-3 text-gray-300" data-i18n="cert1.desc">Comprehensive training in Power BI for data analysis and visualization.</p>
                     </div>
                 </div>
 
@@ -412,18 +394,18 @@
                     <img src="assets/ScreenshotANSA.png" alt="ANSA Training" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                     <div class="p-5">
                         <h3 class="text-lg font-semibold text-white">ANSA Training</h3>
-                        <p class="text-sm text-gray-400 mt-1">Mesh modeling for dynamic simulation</p>
-                        <p class="mt-3 text-gray-300">Training in mesh modeling for CFD and FEM simulations.</p>
+                        <p class="text-sm text-gray-400 mt-1" data-i18n="cert2.type">Mesh modeling for dynamic simulation</p>
+                        <p class="mt-3 text-gray-300" data-i18n="cert2.desc">Training in mesh modeling for CFD and FEM simulations.</p>
                     </div>
                 </div>
 
                 <!-- Certification 3 -->
                 <div class="group bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
-                    <img src="assets/Solidworks2025.png" alt="SolidWorks Course" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <img src="assets/Solidworks2025.webp" alt="SolidWorks Course" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                     <div class="p-5">
                         <h3 class="text-lg font-semibold text-white">Intermediate SolidWorks Course</h3>
-                        <p class="text-sm text-gray-400 mt-1">Modeling and simulation preparation</p>
-                        <p class="mt-3 text-gray-300">Intermediate course for modeling and simulation in SolidWorks, provided by the University.</p>
+                        <p class="text-sm text-gray-400 mt-1" data-i18n="cert3.type">Modeling and simulation preparation</p>
+                        <p class="mt-3 text-gray-300" data-i18n="cert3.desc">Intermediate course for modeling and simulation in SolidWorks, provided by the University.</p>
                     </div>
                 </div>
             </div>
@@ -431,7 +413,7 @@
 
         <!-- EXPERIENCE -->
         <section id="experience" class="max-w-5xl mx-auto px-6 py-12">
-            <h2 class="text-2xl font-semibold mb-6 text-white">Experience & Education</h2>
+            <h2 class="text-2xl font-semibold mb-6 text-white" data-i18n="exp.heading">Experience & Education</h2>
             <div>
                 <!-- Entry 1 -->
                 <div class="md:flex md:gap-6">
@@ -440,10 +422,10 @@
                         <div class="hidden md:block w-0.5 flex-1 mt-1 bg-primary/30"></div>
                     </div>
                     <div class="mt-2 md:mt-0 md:pb-8">
-                        <p class="text-sm text-primary font-medium">Education</p>
+                        <p class="text-sm text-primary font-medium" data-i18n="exp1.type">Education</p>
                         <h3 class="text-lg font-semibold text-white">B.Sc. (Licenciatura) in Aerospace Engineering</h3>
                         <p class="text-sm text-gray-400">Universidade do Minho — 09/2025 – Present</p>
-                        <p class="mt-2 text-gray-300">Currently pursuing a degree in Aerospace Engineering.</p>
+                        <p class="mt-2 text-gray-300" data-i18n="exp1.desc">Currently pursuing a degree in Aerospace Engineering.</p>
                     </div>
                 </div>
 
@@ -454,10 +436,10 @@
                         <div class="hidden md:block w-0.5 flex-1 mt-1 bg-primary/30"></div>
                     </div>
                     <div class="mt-2 md:mt-0 md:pb-8">
-                        <p class="text-sm text-primary font-medium">Internship</p>
+                        <p class="text-sm text-primary font-medium" data-i18n="exp2.type">Internship</p>
                         <h3 class="text-lg font-semibold text-white">Administrative Intern</h3>
                         <p class="text-sm text-gray-400">CREA-MG, Brazil — 05/2024 – 02/2025</p>
-                        <p class="mt-2 text-gray-300">Supported government activities and procedural analysis. Assisted in document drafting, formatting, and data organization. Maintained internal spreadsheets and optimized workflows with MS PowerAutomate.</p>
+                        <p class="mt-2 text-gray-300" data-i18n="exp2.desc">Supported government activities and procedural analysis. Assisted in document drafting, formatting, and data organization. Maintained internal spreadsheets and optimized workflows with MS PowerAutomate.</p>
                     </div>
                 </div>
 
@@ -468,10 +450,10 @@
                         <div class="hidden md:block w-0.5 flex-1 mt-1 bg-primary/30"></div>
                     </div>
                     <div class="mt-2 md:mt-0 md:pb-8">
-                        <p class="text-sm text-primary font-medium">Internship</p>
+                        <p class="text-sm text-primary font-medium" data-i18n="exp3.type">Internship</p>
                         <h3 class="text-lg font-semibold text-white">Administrative Intern</h3>
                         <p class="text-sm text-gray-400">Woodgrove Consultoria, Brazil — 04/2023 – 09/2023</p>
-                        <p class="mt-2 text-gray-300">Conducted data analysis and generated management reports using Power BI. Coordinated travel bookings, visas, and insurance processes. Managed financial and corporate travel data.</p>
+                        <p class="mt-2 text-gray-300" data-i18n="exp3.desc">Conducted data analysis and generated management reports using Power BI. Coordinated travel bookings, visas, and insurance processes. Managed financial and corporate travel data.</p>
                     </div>
                 </div>
 
@@ -482,10 +464,10 @@
                         <div class="hidden md:block w-0.5 flex-1 mt-1 bg-primary/30"></div>
                     </div>
                     <div class="mt-2 md:mt-0 md:pb-8">
-                        <p class="text-sm text-primary font-medium">Education</p>
+                        <p class="text-sm text-primary font-medium" data-i18n="exp4.type">Education</p>
                         <h3 class="text-lg font-semibold text-white">B.Sc. in Aeronautical Engineering</h3>
                         <p class="text-sm text-gray-400">Pontifical Catholic University of Minas Gerais — 08/2022 – 06/2025</p>
-                        <p class="mt-2 text-gray-300">Prior studies in Aeronautical Engineering, before transferring to Portugal.</p>
+                        <p class="mt-2 text-gray-300" data-i18n="exp4.desc">Prior studies in Aeronautical Engineering, before transferring to Portugal.</p>
                     </div>
                 </div>
 
@@ -496,10 +478,10 @@
                         <div class="hidden md:block w-0.5 flex-1 mt-1 bg-primary/30"></div>
                     </div>
                     <div class="mt-2 md:mt-0 md:pb-8">
-                        <p class="text-sm text-primary font-medium">Experience</p>
+                        <p class="text-sm text-primary font-medium" data-i18n="exp5.type">Experience</p>
                         <h3 class="text-lg font-semibold text-white">High School Exchange Program (J-1 Program, USA)</h3>
                         <p class="text-sm text-gray-400">Albuquerque, USA — 2021–2022</p>
-                        <p class="mt-2 text-gray-300">Finished senior year in the USA, in a cultural exchange program, improving language skills and gaining international experience.</p>
+                        <p class="mt-2 text-gray-300" data-i18n="exp5.desc">Finished senior year in the USA, in a cultural exchange program, improving language skills and gaining international experience.</p>
                     </div>
                 </div>
 
@@ -509,10 +491,10 @@
                         <div class="w-3 h-3 rounded-full bg-primary mt-1 flex-shrink-0"></div>
                     </div>
                     <div class="mt-2 md:mt-0">
-                        <p class="text-sm text-primary font-medium">Experience</p>
+                        <p class="text-sm text-primary font-medium" data-i18n="exp6.type">Experience</p>
                         <h3 class="text-lg font-semibold text-white">Assistant, Family Tourism Business</h3>
                         <p class="text-sm text-gray-400">Lta Viagens e Turismo, Brazil — 2018 – 2021</p>
-                        <p class="mt-2 text-gray-300">Assisted in family business. Corporate and personal travel management, Emphasis on customer service with flight, hotel, and tour bookings. Produced promotional advertisements/publications and local travel guides.</p>
+                        <p class="mt-2 text-gray-300" data-i18n="exp6.desc">Assisted in family business. Corporate and personal travel management, Emphasis on customer service with flight, hotel, and tour bookings. Produced promotional advertisements/publications and local travel guides.</p>
                     </div>
                 </div>
             </div>
@@ -521,25 +503,25 @@
         <!-- CV -->
         <section id="cv" class="max-w-3xl mx-auto px-6 py-12 text-center">
             <div class="bg-[#0b1220]/60 border border-gray-800 rounded-lg p-8">
-                <a href="./assets/VL_CV 26Q1 (ENG).pdf" download class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-md shadow hover:-translate-y-1 transition duration-300 ease-in-out">Download CV</a>
-                <p class="mt-4 text-gray-300">Available for internships & part-time collaborations.</p>
+                <a href="./assets/VL_CV 26Q1 (ENG).pdf" download data-i18n="cv.download" class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-md shadow hover:-translate-y-1 transition duration-300 ease-in-out">Download CV</a>
+                <p class="mt-4 text-gray-300" data-i18n="cv.available">Available for internships & part-time collaborations.</p>
             </div>
         </section>
 
         <!-- CONTACT -->
         <section id="contact" class="max-w-5xl mx-auto px-6 py-12">
-            <h2 class="text-2xl font-semibold mb-6 text-white">Contact</h2>
+            <h2 class="text-2xl font-semibold mb-6 text-white" data-i18n="contact.heading">Contact</h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <a href="mailto:vitorladpt@gmail.com" class="group card-3d bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden p-6 transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
-                    <p class="text-sm text-gray-400">Email</p>
+                    <p class="text-sm text-gray-400" data-i18n="contact.email">Email</p>
                     <p class="mt-2 text-white font-semibold">vitorladpt@gmail.com</p>
                 </a>
                 <a href="https://www.linkedin.com/in/vitor-ladeira" target="_blank" rel="noreferrer" class="group card-3d bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden p-6 transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
-                    <p class="text-sm text-gray-400">LinkedIn</p>
+                    <p class="text-sm text-gray-400" data-i18n="contact.linkedin">LinkedIn</p>
                     <p class="mt-2 text-white font-semibold">/in/vitor-ladeira</p>
                 </a>
                 <a href="https://github.com/v-ladeira" target="_blank" rel="noreferrer" class="group card-3d bg-[#071025]/60 border border-gray-800 rounded-lg overflow-hidden p-6 transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:border-primary">
-                    <p class="text-sm text-gray-400">GitHub</p>
+                    <p class="text-sm text-gray-400" data-i18n="contact.github">GitHub</p>
                     <p class="mt-2 text-white font-semibold">github.com/v-ladeira</p>
                 </a>
             </div>
@@ -547,7 +529,7 @@
 
         <!-- FOOTER -->
         <footer class="border-t border-gray-800 mt-12 py-6">
-            <div class="max-w-5xl mx-auto px-6 text-center text-gray-400">© 2026 Vitor Ladeira · Built with HTML & Tailwind</div>
+            <div class="max-w-5xl mx-auto px-6 text-center text-gray-400" data-i18n="footer.text">© 2026 Vitor Ladeira · Built with HTML & Tailwind</div>
         </footer>
     </main>
 
@@ -572,36 +554,34 @@
         document.querySelectorAll('#mobile-menu a').forEach(a => a.addEventListener('click', () => menu.classList.add('hidden')));
 
         // ============ TYPED.JS EFFECT ============
-        document.addEventListener('DOMContentLoaded', () => {
-            new Typed('#typed', {
-                strings: [
-                    'Aerospace Engineer (WIP)',
-                    'CAD Designer',
-                    'Data Analyst',
-                    'Problem Solver'
-                ],
+        let typedInstance = null;
+        function initTyped(lang) {
+            if (typedInstance) { typedInstance.destroy(); document.getElementById('typed').textContent = ''; }
+            typedInstance = new Typed('#typed', {
+                strings: translations[lang]['typed.strings'],
                 typeSpeed: 60,
                 backSpeed: 40,
                 backDelay: 1500,
                 loop: true,
                 smartBackspace: true
             });
-        });
+        }
+        // initTyped is called via setLanguage('en') on DOMContentLoaded below
 
         // ============ PARTICLES.JS CONFIGURATION ============
         window.addEventListener('load', () => {
             if (typeof particlesJS !== 'undefined') {
                 particlesJS('particles-js', {
                     particles: {
-                        number: { value: 60, density: { enable: true, value_area: 800 } },
-                        color: { value: '#6366f1' },
+                        number: { value: 120, density: { enable: true, value_area: 600 } },
+                        color: { value: '#ff0000' },
                         shape: { type: 'circle' },
                         opacity: { value: 0.5, random: true },
                         size: { value: 3, random: true },
                         line_linked: {
                             enable: true,
                             distance: 150,
-                            color: '#a78bfa',
+                            color: '#ff0000',
                             opacity: 0.4,
                             width: 1
                         },
@@ -616,7 +596,7 @@
                         }
                     },
                     interactivity: {
-                        detect_on: 'canvas',
+                        detect_on: 'window',
                         events: {
                             onhover: { enable: true, mode: 'repulse' },
                             onclick: { enable: true, mode: 'push' },
@@ -977,23 +957,6 @@
             track.addEventListener('mouseup',    () => { if (dragging) onEnd(); });
             track.addEventListener('mouseleave', () => { if (dragging) onEnd(); });
 
-            // Scroll / trackpad gestures to change cards
-            let wheelLocked = false;
-            track.addEventListener('wheel', e => {
-                const dx = Math.abs(e.deltaX);
-                const dy = Math.abs(e.deltaY);
-                if (dx < 12 && dy < 12) return;
-                e.preventDefault();
-                if (wheelLocked) return;
-                wheelLocked = true;
-                if (dx > dy) {
-                    goTo(current + (e.deltaX > 0 ? 1 : -1));
-                } else {
-                    goTo(current + (e.deltaY > 0 ? 1 : -1));
-                }
-                setTimeout(() => wheelLocked = false, 150);
-            }, { passive: false });
-
             // Click side cards (desktop) — skip if a drag occurred
             track.addEventListener('click', e => {
                 if (window.innerWidth <= 768 || didDrag) { didDrag = false; return; }
@@ -1034,48 +997,340 @@
             navObserver.observe(section);
         });
 
-        // ============ CUSTOM CURSOR GLOW ============
-        const cursor = document.createElement('div');
-        cursor.style.position = 'fixed';
-        cursor.style.width = '30px';
-        cursor.style.height = '30px';
-        cursor.style.borderRadius = '50%';
-        cursor.style.background = 'radial-gradient(circle, rgba(163, 0, 2, 0.3), transparent)';
-        cursor.style.pointerEvents = 'none';
-        cursor.style.zIndex = '9999';
-        cursor.style.boxShadow = '0 0 20px rgba(163, 0, 2, 0.4)';
-        cursor.style.transition = 'all 0.05s ease';
-        document.body.appendChild(cursor);
+        // ============ TRANSLATIONS ============
+        const translations = {
+            en: {
+                'nav.about': 'About',
+                'nav.projects': 'Projects',
+                'nav.skills': 'Skills',
+                'nav.experience': 'Experience',
+                'nav.cv': 'CV',
+                'nav.contact': 'Contact',
+                'hero.description': 'Aspiring aerospace engineer with international academic and professional experience, combining strong analytical ability, adaptability, and teamwork.',
+                'hero.view-projects': 'View Projects',
+                'hero.download-cv': 'Download CV',
+                'about.heading': 'About',
+                'about.text': "Hi! I'm an aspiring aerospace engineer with international academic and professional experience. I'm driven by my own curiosity and a passion for problem-solving. I'm currently studying Aerospace Engineering at the Universidade do Minho, after beginning my journey in Aeronautical Engineering in Brazil. Along the way, I've developed strong analytical skills, adaptability, and a collaborative mindset. Through internships and international experiences, I've gained hands-on experience in data management, CAD modeling, and working in tandem with diverse, cross-cultural teams.",
+                'projects.heading': 'Projects',
+                'proj1.type': 'Web Development',
+                'proj1.desc': "Some personal and some joint websites built with HTML5, TailwindCSS, and modern web design principles. Showcasing professional work and expertise. Examples include:<br><a href='https://vitastiq.pt/' target='_blank' rel='noopener noreferrer' class='text-primary'>Vitastiq.pt</a> | <a href='https://teoricar.com.br/' target='_blank' rel='noopener noreferrer' class='text-primary'>Teoricar.com.br</a> | <a href='https://www.vtec.com.br/' target='_blank' rel='noopener noreferrer' class='text-primary'>VTEC.com.br</a> <em>(WIP)</em>",
+                'proj2.type': 'CAD Modeling | CATIA V6',
+                'proj2.desc': 'Detailed 3D CAD model of a Cessna aircraft designed in CATIA V6 for academic project. Demonstrates proficiency in parametric design and aerospace component modeling.',
+                'proj3.type': 'FEM Simulation | Autodesk Fusion',
+                'proj3.desc': 'Finite Element Method (FEM) simulation and structural analysis performed in Autodesk Fusion. Analyzing stress distribution and preparing for topology optimization for academic project.',
+                'skills.heading': 'Skills',
+                'certs.heading': 'Certifications & Training',
+                'cert1.type': 'Power BI Training',
+                'cert1.desc': 'Comprehensive training in Power BI for data analysis and visualization.',
+                'cert2.type': 'Mesh modeling for dynamic simulation',
+                'cert2.desc': 'Training in mesh modeling for CFD and FEM simulations.',
+                'cert3.type': 'Modeling and simulation preparation',
+                'cert3.desc': 'Intermediate course for modeling and simulation in SolidWorks, provided by the University.',
+                'exp.heading': 'Experience & Education',
+                'exp1.type': 'Education',
+                'exp1.desc': 'Currently pursuing a degree in Aerospace Engineering.',
+                'exp2.type': 'Internship',
+                'exp2.desc': 'Supported government activities and procedural analysis. Assisted in document drafting, formatting, and data organization. Maintained internal spreadsheets and optimized workflows with MS PowerAutomate.',
+                'exp3.type': 'Internship',
+                'exp3.desc': 'Conducted data analysis and generated management reports using Power BI. Coordinated travel bookings, visas, and insurance processes. Managed financial and corporate travel data.',
+                'exp4.type': 'Education',
+                'exp4.desc': 'Prior studies in Aeronautical Engineering, before transferring to Portugal.',
+                'exp5.type': 'Experience',
+                'exp5.desc': 'Finished senior year in the USA, in a cultural exchange program, improving language skills and gaining international experience.',
+                'exp6.type': 'Experience',
+                'exp6.desc': 'Assisted in family business. Corporate and personal travel management, Emphasis on customer service with flight, hotel, and tour bookings. Produced promotional advertisements/publications and local travel guides.',
+                'cv.download': 'Download CV',
+                'cv.available': 'Available for internships & part-time collaborations.',
+                'contact.heading': 'Contact',
+                'contact.email': 'Email',
+                'contact.linkedin': 'LinkedIn',
+                'contact.github': 'GitHub',
+                'footer.text': '© 2026 Vitor Ladeira · Built with HTML & Tailwind',
+                'typed.strings': ['Aerospace Engineer (WIP)', 'Web Developer', 'CAD Designer', 'Data Analyst', 'Problem Solver'],
+            },
+            pt: {
+                'nav.about': 'Sobre',
+                'nav.projects': 'Projetos',
+                'nav.skills': 'Competências',
+                'nav.experience': 'Experiência',
+                'nav.cv': 'CV',
+                'nav.contact': 'Contacto',
+                'hero.description': 'Futuro engenheiro aeroespacial com experiência académica e profissional internacional, combinando forte capacidade analítica, adaptabilidade e espírito de equipa.',
+                'hero.view-projects': 'Ver Projetos',
+                'hero.download-cv': 'Baixar CV',
+                'about.heading': 'Sobre',
+                'about.text': 'Olá! Sou um futuro engenheiro aeroespacial com experiência académica e profissional internacional. Sou movido pela curiosidade e pela paixão em resolver problemas. Atualmente estudo Engenharia Aeroespacial na Universidade do Minho, depois de ter iniciado a minha jornada em Engenharia Aeronáutica no Brasil. Ao longo do caminho, desenvolvi fortes competências analíticas, adaptabilidade e mentalidade colaborativa. Através de estágios e experiências internacionais, adquiri experiência prática em gestão de dados, modelação CAD e trabalho em equipa com grupos multiculturais e diversificados.',
+                'projects.heading': 'Projetos',
+                'proj1.type': 'Desenvolvimento Web',
+                'proj1.desc': "Alguns sites pessoais e conjuntos desenvolvidos com HTML5, TailwindCSS e princípios modernos de web design. Exemplos incluem:<br><a href='https://vitastiq.pt/' target='_blank' rel='noopener noreferrer' class='text-primary'>Vitastiq.pt</a> | <a href='https://teoricar.com.br/' target='_blank' rel='noopener noreferrer' class='text-primary'>Teoricar.com.br</a> | <a href='https://www.vtec.com.br/' target='_blank' rel='noopener noreferrer' class='text-primary'>VTEC.com.br</a> <em>(WIP)</em>",
+                'proj2.type': 'Modelação CAD | CATIA V6',
+                'proj2.desc': 'Modelo 3D detalhado de uma aeronave Cessna desenhado no CATIA V6 para projeto académico. Demonstra proficiência em design paramétrico e modelação de componentes aeroespaciais.',
+                'proj3.type': 'Simulação FEM | Autodesk Fusion',
+                'proj3.desc': 'Simulação pelo Método dos Elementos Finitos (MEF) e análise estrutural realizadas no Autodesk Fusion. Análise de distribuição de tensões e preparação para otimização topológica em projeto académico.',
+                'skills.heading': 'Competências',
+                'certs.heading': 'Certificações & Formação',
+                'cert1.type': 'Formação em Power BI',
+                'cert1.desc': 'Formação abrangente em Power BI para análise e visualização de dados.',
+                'cert2.type': 'Modelação de malha para simulação dinâmica',
+                'cert2.desc': 'Formação em modelação de malha para simulações CFD e MEF.',
+                'cert3.type': 'Preparação para modelação e simulação',
+                'cert3.desc': 'Curso intermédio de modelação e simulação em SolidWorks, ministrado pela Universidade.',
+                'exp.heading': 'Experiência & Formação',
+                'exp1.type': 'Formação',
+                'exp1.desc': 'Atualmente a frequentar a licenciatura em Engenharia Aeroespacial.',
+                'exp2.type': 'Estágio',
+                'exp2.desc': 'Apoio a atividades governamentais e análise de procedimentos. Auxílio na elaboração, formatação e organização de documentos e dados. Manutenção de folhas de cálculo internas e otimização de fluxos de trabalho com MS PowerAutomate.',
+                'exp3.type': 'Estágio',
+                'exp3.desc': 'Análise de dados e geração de relatórios de gestão com Power BI. Coordenação de reservas de viagem, vistos e processos de seguro. Gestão de dados financeiros e de viagens corporativas.',
+                'exp4.type': 'Formação',
+                'exp4.desc': 'Estudos anteriores em Engenharia Aeronáutica, antes da transferência para Portugal.',
+                'exp5.type': 'Experiência',
+                'exp5.desc': 'Concluiu o último ano do ensino secundário nos EUA, num programa de intercâmbio cultural, melhorando as competências linguísticas e adquirindo experiência internacional.',
+                'exp6.type': 'Experiência',
+                'exp6.desc': 'Apoio ao negócio familiar. Gestão de viagens corporativas e pessoais, com ênfase no atendimento ao cliente, reservas de voos, hotéis e passeios. Produção de publicidade/publicações promocionais e guias de viagem locais.',
+                'cv.download': 'Baixar CV',
+                'cv.available': 'Disponível para estágios e colaborações a tempo parcial.',
+                'contact.heading': 'Contacto',
+                'contact.email': 'E-mail',
+                'contact.linkedin': 'LinkedIn',
+                'contact.github': 'GitHub',
+                'footer.text': '© 2026 Vitor Ladeira · Desenvolvido com HTML & Tailwind',
+                'typed.strings': ['Engenheiro Aeroespacial (WIP)', 'Desenvolvedor Web', 'Designer CAD', 'Analista de Dados', 'Resolução de Problemas'],
+            },
+            de: {
+                'nav.about': 'Über mich',
+                'nav.projects': 'Projekte',
+                'nav.skills': 'Fähigkeiten',
+                'nav.experience': 'Erfahrung',
+                'nav.cv': 'Lebenslauf',
+                'nav.contact': 'Kontakt',
+                'hero.description': 'Angehender Luft- und Raumfahrtingenieur mit internationaler akademischer und beruflicher Erfahrung, kombiniert mit starker analytischer Kompetenz, Anpassungsfähigkeit und Teamgeist.',
+                'hero.view-projects': 'Projekte ansehen',
+                'hero.download-cv': 'Lebenslauf herunterladen',
+                'about.heading': 'Über mich',
+                'about.text': 'Hallo! Ich bin ein angehender Luft- und Raumfahrtingenieur mit internationaler akademischer und beruflicher Erfahrung. Ich bin von Neugier und der Leidenschaft für Problemlösung angetrieben. Derzeit studiere ich Luft- und Raumfahrttechnik an der Universidade do Minho, nachdem ich meine Reise in der Luftfahrttechnik in Brasilien begonnen habe. Dabei habe ich starke analytische Fähigkeiten, Anpassungsfähigkeit und eine kollaborative Denkweise entwickelt. Durch Praktika und internationale Erfahrungen habe ich praktische Kenntnisse in Datenverwaltung, CAD-Modellierung und der Arbeit in vielfältigen, interkulturellen Teams gewonnen.',
+                'projects.heading': 'Projekte',
+                'proj1.type': 'Webentwicklung',
+                'proj1.desc': "Persönliche und gemeinschaftliche Websites, erstellt mit HTML5, TailwindCSS und modernen Webdesign-Prinzipien. Beispiele:<br><a href='https://vitastiq.pt/' target='_blank' rel='noopener noreferrer' class='text-primary'>Vitastiq.pt</a> | <a href='https://teoricar.com.br/' target='_blank' rel='noopener noreferrer' class='text-primary'>Teoricar.com.br</a> | <a href='https://www.vtec.com.br/' target='_blank' rel='noopener noreferrer' class='text-primary'>VTEC.com.br</a> <em>(WIP)</em>",
+                'proj2.type': 'CAD-Modellierung | CATIA V6',
+                'proj2.desc': 'Detailliertes 3D-CAD-Modell eines Cessna-Flugzeugs, entworfen in CATIA V6 für ein akademisches Projekt. Zeigt Kompetenz in parametrischem Design und Luft- und Raumfahrtkomponenten-Modellierung.',
+                'proj3.type': 'FEM-Simulation | Autodesk Fusion',
+                'proj3.desc': 'Finite-Elemente-Methode (FEM) Simulation und Strukturanalyse in Autodesk Fusion. Analyse der Spannungsverteilung und Vorbereitung der Topologieoptimierung für ein akademisches Projekt.',
+                'skills.heading': 'Fähigkeiten',
+                'certs.heading': 'Zertifizierungen & Weiterbildung',
+                'cert1.type': 'Power BI Schulung',
+                'cert1.desc': 'Umfassende Schulung in Power BI für Datenanalyse und -visualisierung.',
+                'cert2.type': 'Netzmodellierung für dynamische Simulation',
+                'cert2.desc': 'Schulung in Netzmodellierung für CFD- und FEM-Simulationen.',
+                'cert3.type': 'Modellierungs- und Simulationsvorbereitung',
+                'cert3.desc': 'Fortgeschrittenenkurs für Modellierung und Simulation in SolidWorks, angeboten von der Universität.',
+                'exp.heading': 'Erfahrung & Ausbildung',
+                'exp1.type': 'Ausbildung',
+                'exp1.desc': 'Derzeit im Bachelorstudium Luft- und Raumfahrttechnik.',
+                'exp2.type': 'Praktikum',
+                'exp2.desc': 'Unterstützung von Regierungsaktivitäten und Verfahrensanalyse. Mitarbeit bei der Erstellung, Formatierung und Organisation von Dokumenten und Daten. Pflege interner Tabellenkalkulationen und Optimierung von Arbeitsabläufen mit MS PowerAutomate.',
+                'exp3.type': 'Praktikum',
+                'exp3.desc': 'Datenanalyse und Erstellung von Managementberichten mit Power BI. Koordination von Reisebuchungen, Visa und Versicherungsprozessen. Verwaltung von Finanz- und Geschäftsreisedaten.',
+                'exp4.type': 'Ausbildung',
+                'exp4.desc': 'Frühere Studien in Luftfahrttechnik, vor dem Wechsel nach Portugal.',
+                'exp5.type': 'Erfahrung',
+                'exp5.desc': 'Abschluss der letzten Klasse in den USA im Rahmen eines kulturellen Austauschprogramms, mit Verbesserung der Sprachkenntnisse und internationaler Erfahrung.',
+                'exp6.type': 'Erfahrung',
+                'exp6.desc': 'Mitarbeit im Familienbetrieb. Verwaltung von Geschäfts- und Privatreisen mit Schwerpunkt auf Kundenservice, Flug-, Hotel- und Tourbuchungen. Erstellung von Werbematerialien und lokalen Reiseführern.',
+                'cv.download': 'Lebenslauf herunterladen',
+                'cv.available': 'Verfügbar für Praktika und Teilzeit-Kooperationen.',
+                'contact.heading': 'Kontakt',
+                'contact.email': 'E-Mail',
+                'contact.linkedin': 'LinkedIn',
+                'contact.github': 'GitHub',
+                'footer.text': '© 2026 Vitor Ladeira · Erstellt mit HTML & Tailwind',
+                'typed.strings': ['Luft- und Raumfahrtingenieur (WIP)', 'Webentwickler', 'CAD-Designer', 'Datenanalyst', 'Problemlöser'],
+            },
+            fr: {
+                'nav.about': 'À propos',
+                'nav.projects': 'Projets',
+                'nav.skills': 'Compétences',
+                'nav.experience': 'Expérience',
+                'nav.cv': 'CV',
+                'nav.contact': 'Contact',
+                'hero.description': "Futur ingénieur en aérospatiale avec une expérience académique et professionnelle internationale, alliant de solides capacités analytiques, de l'adaptabilité et l'esprit d'équipe.",
+                'hero.view-projects': 'Voir les projets',
+                'hero.download-cv': 'Télécharger le CV',
+                'about.heading': 'À propos',
+                'about.text': "Bonjour ! Je suis un futur ingénieur en aérospatiale avec une expérience académique et professionnelle internationale. Je suis animé par la curiosité et la passion pour la résolution de problèmes. J'étudie actuellement l'ingénierie aérospatiale à l'Universidade do Minho, après avoir commencé mon parcours en ingénierie aéronautique au Brésil. Au fil du temps, j'ai développé de solides compétences analytiques, de l'adaptabilité et un esprit collaboratif. Grâce à des stages et des expériences internationales, j'ai acquis une expérience pratique en gestion de données, modélisation CAO et travail au sein d'équipes diverses et multiculturelles.",
+                'projects.heading': 'Projets',
+                'proj1.type': 'Développement Web',
+                'proj1.desc': "Sites web personnels et collaboratifs développés avec HTML5, TailwindCSS et des principes modernes de conception web. Exemples :<br><a href='https://vitastiq.pt/' target='_blank' rel='noopener noreferrer' class='text-primary'>Vitastiq.pt</a> | <a href='https://teoricar.com.br/' target='_blank' rel='noopener noreferrer' class='text-primary'>Teoricar.com.br</a> | <a href='https://www.vtec.com.br/' target='_blank' rel='noopener noreferrer' class='text-primary'>VTEC.com.br</a> <em>(WIP)</em>",
+                'proj2.type': 'Modélisation CAO | CATIA V6',
+                'proj2.desc': 'Modèle CAO 3D détaillé d\'un avion Cessna conçu dans CATIA V6 pour un projet académique. Démontre la maîtrise de la conception paramétrique et de la modélisation de composants aérospatiaux.',
+                'proj3.type': 'Simulation FEM | Autodesk Fusion',
+                'proj3.desc': 'Simulation par éléments finis (FEM) et analyse structurelle réalisées dans Autodesk Fusion. Analyse de la distribution des contraintes et préparation à l\'optimisation topologique pour un projet académique.',
+                'skills.heading': 'Compétences',
+                'certs.heading': 'Certifications & Formation',
+                'cert1.type': 'Formation Power BI',
+                'cert1.desc': 'Formation complète en Power BI pour l\'analyse et la visualisation de données.',
+                'cert2.type': 'Modélisation de maillage pour simulation dynamique',
+                'cert2.desc': 'Formation en modélisation de maillage pour les simulations CFD et FEM.',
+                'cert3.type': 'Préparation à la modélisation et simulation',
+                'cert3.desc': 'Cours intermédiaire de modélisation et simulation sous SolidWorks, dispensé par l\'Université.',
+                'exp.heading': 'Expérience & Formation',
+                'exp1.type': 'Formation',
+                'exp1.desc': 'Actuellement en licence d\'ingénierie aérospatiale.',
+                'exp2.type': 'Stage',
+                'exp2.desc': 'Soutien aux activités gouvernementales et analyse des procédures. Aide à la rédaction, mise en forme et organisation de documents et données. Maintenance de feuilles de calcul internes et optimisation des flux de travail avec MS PowerAutomate.',
+                'exp3.type': 'Stage',
+                'exp3.desc': 'Analyse de données et génération de rapports de gestion avec Power BI. Coordination des réservations de voyage, visas et processus d\'assurance. Gestion des données financières et de voyage d\'entreprise.',
+                'exp4.type': 'Formation',
+                'exp4.desc': 'Études antérieures en ingénierie aéronautique, avant le transfert au Portugal.',
+                'exp5.type': 'Expérience',
+                'exp5.desc': 'Dernière année de lycée aux États-Unis dans le cadre d\'un programme d\'échange culturel, avec amélioration des compétences linguistiques et acquisition d\'une expérience internationale.',
+                'exp6.type': 'Expérience',
+                'exp6.desc': 'Aide dans l\'entreprise familiale. Gestion de voyages d\'affaires et personnels, avec accent sur le service client, réservations de vols, hôtels et circuits. Production de publicités/publications promotionnelles et guides de voyage locaux.',
+                'cv.download': 'Télécharger le CV',
+                'cv.available': 'Disponible pour des stages et des collaborations à temps partiel.',
+                'contact.heading': 'Contact',
+                'contact.email': 'E-mail',
+                'contact.linkedin': 'LinkedIn',
+                'contact.github': 'GitHub',
+                'footer.text': '© 2026 Vitor Ladeira · Développé avec HTML & Tailwind',
+                'typed.strings': ['Ingénieur Aérospatial (WIP)', 'Développeur Web', 'Designer CAO', 'Analyste de données', 'Résolution de problèmes'],
+            },
+            es: {
+                'nav.about': 'Sobre mí',
+                'nav.projects': 'Proyectos',
+                'nav.skills': 'Habilidades',
+                'nav.experience': 'Experiencia',
+                'nav.cv': 'CV',
+                'nav.contact': 'Contacto',
+                'hero.description': 'Futuro ingeniero aeroespacial con experiencia académica y profesional internacional, combinando sólida capacidad analítica, adaptabilidad y trabajo en equipo.',
+                'hero.view-projects': 'Ver proyectos',
+                'hero.download-cv': 'Descargar CV',
+                'about.heading': 'Sobre mí',
+                'about.text': '¡Hola! Soy un futuro ingeniero aeroespacial con experiencia académica y profesional internacional. Me impulsa la curiosidad y la pasión por resolver problemas. Actualmente estudio Ingeniería Aeroespacial en la Universidade do Minho, tras haber comenzado mi camino en Ingeniería Aeronáutica en Brasil. A lo largo del camino, he desarrollado sólidas habilidades analíticas, adaptabilidad y una mentalidad colaborativa. A través de prácticas y experiencias internacionales, he adquirido experiencia práctica en gestión de datos, modelado CAD y trabajo en equipos diversos y multiculturales.',
+                'projects.heading': 'Proyectos',
+                'proj1.type': 'Desarrollo Web',
+                'proj1.desc': "Sitios web personales y colaborativos desarrollados con HTML5, TailwindCSS y principios modernos de diseño web. Ejemplos:<br><a href='https://vitastiq.pt/' target='_blank' rel='noopener noreferrer' class='text-primary'>Vitastiq.pt</a> | <a href='https://teoricar.com.br/' target='_blank' rel='noopener noreferrer' class='text-primary'>Teoricar.com.br</a> | <a href='https://www.vtec.com.br/' target='_blank' rel='noopener noreferrer' class='text-primary'>VTEC.com.br</a> <em>(WIP)</em>",
+                'proj2.type': 'Modelado CAD | CATIA V6',
+                'proj2.desc': 'Modelo CAD 3D detallado de una aeronave Cessna diseñado en CATIA V6 para proyecto académico. Demuestra competencia en diseño paramétrico y modelado de componentes aeroespaciales.',
+                'proj3.type': 'Simulación FEM | Autodesk Fusion',
+                'proj3.desc': 'Simulación por el Método de Elementos Finitos (MEF) y análisis estructural realizados en Autodesk Fusion. Análisis de la distribución de tensiones y preparación para la optimización topológica en proyecto académico.',
+                'skills.heading': 'Habilidades',
+                'certs.heading': 'Certificaciones & Formación',
+                'cert1.type': 'Formación en Power BI',
+                'cert1.desc': 'Formación completa en Power BI para análisis y visualización de datos.',
+                'cert2.type': 'Modelado de malla para simulación dinámica',
+                'cert2.desc': 'Formación en modelado de malla para simulaciones CFD y FEM.',
+                'cert3.type': 'Preparación para modelado y simulación',
+                'cert3.desc': 'Curso intermedio de modelado y simulación en SolidWorks, impartido por la Universidad.',
+                'exp.heading': 'Experiencia & Formación',
+                'exp1.type': 'Formación',
+                'exp1.desc': 'Actualmente cursando el grado en Ingeniería Aeroespacial.',
+                'exp2.type': 'Prácticas',
+                'exp2.desc': 'Apoyo a actividades gubernamentales y análisis de procedimientos. Asistencia en la redacción, formato y organización de documentos y datos. Mantenimiento de hojas de cálculo internas y optimización de flujos de trabajo con MS PowerAutomate.',
+                'exp3.type': 'Prácticas',
+                'exp3.desc': 'Análisis de datos y generación de informes de gestión con Power BI. Coordinación de reservas de viaje, visados y procesos de seguros. Gestión de datos financieros y de viajes corporativos.',
+                'exp4.type': 'Formación',
+                'exp4.desc': 'Estudios previos en Ingeniería Aeronáutica, antes del traslado a Portugal.',
+                'exp5.type': 'Experiencia',
+                'exp5.desc': 'Último año de bachillerato en EE.UU. en un programa de intercambio cultural, mejorando las habilidades lingüísticas y adquiriendo experiencia internacional.',
+                'exp6.type': 'Experiencia',
+                'exp6.desc': 'Apoyo al negocio familiar. Gestión de viajes corporativos y personales con énfasis en la atención al cliente, reservas de vuelos, hoteles y excursiones. Producción de publicidad/publicaciones promocionales y guías de viaje locales.',
+                'cv.download': 'Descargar CV',
+                'cv.available': 'Disponible para prácticas y colaboraciones a tiempo parcial.',
+                'contact.heading': 'Contacto',
+                'contact.email': 'Correo',
+                'contact.linkedin': 'LinkedIn',
+                'contact.github': 'GitHub',
+                'footer.text': '© 2026 Vitor Ladeira · Desarrollado con HTML & Tailwind',
+                'typed.strings': ['Ingeniero Aeroespacial (WIP)', 'Desarrollador Web', 'Diseñador CAD', 'Analista de datos', 'Resolución de problemas'],
+            },
+        };
 
-        const dot = document.createElement('div');
-        dot.style.position = 'fixed';
-        dot.style.width = '8px';
-        dot.style.height = '8px';
-        dot.style.borderRadius = '50%';
-        dot.style.background = '#A30002';
-        dot.style.pointerEvents = 'none';
-        dot.style.zIndex = '10000';
-        dot.style.boxShadow = '0 0 15px rgba(163, 0, 2, 0.5)';
-        dot.style.transition = 'all 0.02s ease';
-        document.body.appendChild(dot);
+        // ============ LANGUAGE SWITCH ============
+        const langLabelMap = { en: 'EN', pt: 'PT', de: 'DE', fr: 'FR', es: 'ES' };
+        const langHtmlMap  = { en: 'en', pt: 'pt', de: 'de', fr: 'fr', es: 'es' };
 
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = (e.clientX - 15) + 'px';
-            cursor.style.top = (e.clientY - 15) + 'px';
-            dot.style.left = (e.clientX - 4) + 'px';
-            dot.style.top = (e.clientY - 4) + 'px';
+        function setLanguage(lang) {
+            if (!translations[lang]) return;
+            document.documentElement.lang = langHtmlMap[lang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key] !== undefined) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            document.querySelectorAll('#lang-label-desktop').forEach(el => el.textContent = langLabelMap[lang]);
+            // Highlight active lang buttons
+            document.querySelectorAll('.lang-option').forEach(btn => {
+                const active = btn.getAttribute('data-lang') === lang;
+                btn.classList.toggle('text-primary', active);
+                btn.classList.toggle('border-primary', active);
+            });
+            initTyped(lang);
+        }
+
+        // Desktop dropdown toggle
+        const desktopBtn = document.getElementById('lang-btn-desktop');
+        const desktopDrop = document.getElementById('lang-dropdown-desktop');
+        desktopBtn && desktopBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            desktopDrop.classList.toggle('hidden');
+        });
+        document.addEventListener('click', () => desktopDrop && desktopDrop.classList.add('hidden'));
+
+        // All lang-option buttons (desktop dropdown + mobile row)
+        document.addEventListener('click', e => {
+            const btn = e.target.closest('.lang-option');
+            if (!btn) return;
+            const lang = btn.getAttribute('data-lang');
+            setLanguage(lang);
+            desktopDrop && desktopDrop.classList.add('hidden');
         });
 
-        // Hide cursor when leaving window
-        document.addEventListener('mouseleave', () => {
-            cursor.style.opacity = '0';
-            dot.style.opacity = '0';
+        // Init at EN on load
+        document.addEventListener('DOMContentLoaded', () => setLanguage('en'));
+
+        // ============ VITASTIQ GIF — PAUSE WHEN NOT HOVERED ============
+        document.addEventListener('DOMContentLoaded', () => {
+            const wrapper = document.getElementById('vitastiq-wrapper');
+            const canvas  = document.getElementById('vitastiq-canvas');
+            const gif     = document.getElementById('vitastiq-gif');
+            if (!wrapper || !canvas || !gif) return;
+
+            const ctx    = canvas.getContext('2d');
+            const gifSrc = gif.src;
+
+            function drawCover() {
+                const W = wrapper.offsetWidth;
+                const H = wrapper.offsetHeight;
+                canvas.width  = W;
+                canvas.height = H;
+                const iR = gif.naturalWidth / gif.naturalHeight;
+                const cR = W / H;
+                let dW, dH, x, y;
+                if (iR > cR) { dH = H; dW = dH * iR; x = (W - dW) / 2; y = 0; }
+                else         { dW = W; dH = dW / iR; x = 0; y = (H - dH) / 2; }
+                ctx.drawImage(gif, x, y, dW, dH);
+                // Stop the GIF after capturing the first frame
+                gif.src = '';
+            }
+
+            if (gif.complete && gif.naturalWidth) drawCover();
+            else gif.addEventListener('load', drawCover, { once: true });
+
+            wrapper.addEventListener('mouseenter', () => {
+                gif.src = gifSrc;
+                gif.style.opacity = '1';
+                canvas.style.opacity = '0';
+            });
+            wrapper.addEventListener('mouseleave', () => {
+                gif.style.opacity = '0';
+                canvas.style.opacity = '1';
+                // Clear src after fade-out so GIF resets to frame 1 next hover
+                setTimeout(() => { if (!wrapper.matches(':hover')) gif.src = ''; }, 370);
+            });
         });
 
-        document.addEventListener('mouseenter', () => {
-            cursor.style.opacity = '1';
-            dot.style.opacity = '1';
-        });
     </script>
 </body>
 </html>
